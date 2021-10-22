@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zs.dao.GoodsDao">
+
+    <resultMap type="com.zs.entity.Goods" id="GoodsMap">
+        <result property="gId" column="g_id" jdbcType="INTEGER"/>
+        <result property="cId" column="c_id" jdbcType="INTEGER"/>
+        <result property="gName" column="g_name" jdbcType="VARCHAR"/>
+        <result property="gPrice" column="g_price" jdbcType="VARCHAR"/>
+        <result property="gIsdiscount" column="g_isdiscount" jdbcType="INTEGER"/>
+        <result property="gDescribe" column="g_describe" jdbcType="VARCHAR"/>
+        <result property="gSalesVolume" column="g_sales_volume" jdbcType="VARCHAR"/>
+        <result property="gBuyPersonTime" column="g_buy_person_time" jdbcType="INTEGER"/>
+        <result property="gStock" column="g_stock" jdbcType="VARCHAR"/>
+        <result property="gStorageTime" column="g_storage_time" jdbcType="TIMESTAMP"/>
+        <result property="gRemovalTime" column="g_removal_time" jdbcType="TIMESTAMP"/>
+        <result property="gStatus" column="g_status" jdbcType="INTEGER"/>
+        <result property="es1" column="es_1" jdbcType="VARCHAR"/>
+        <result property="es2" column="es_2" jdbcType="VARCHAR"/>
+        <result property="es3" column="es_3" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="GoodsMap">
+        select g_id,
+               c_id,
+               g_name,
+               g_price,
+               g_isdiscount,
+               g_describe,
+               g_sales_volume,
+               g_buy_person_time,
+               g_stock,
+               g_storage_time,
+               g_removal_time,
+               g_status,
+               es_1,
+               es_2,
+               es_3
+        from goods
+        where g_id = #{gId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="GoodsMap">
+        select
+        g_id, c_id, g_name, g_price, g_isdiscount, g_describe, g_sales_volume, g_buy_person_time, g_stock,
+        g_storage_time, g_removal_time, g_status, es_1, es_2, es_3
+        from goods
+        <where>
+            <if test="gId != null">
+                and g_id = #{gId}
+            </if>
+            <if test="cId != null">
+                and c_id = #{cId}
+            </if>
+            <if test="gName != null and gName != ''">
+                and g_name = #{gName}
+            </if>
+            <if test="gPrice != null">
+                and g_price = #{gPrice}
+            </if>
+            <if test="gIsdiscount != null">
+                and g_isdiscount = #{gIsdiscount}
+            </if>
+            <if test="gDescribe != null and gDescribe != ''">
+                and g_describe = #{gDescribe}
+            </if>
+            <if test="gSalesVolume != null">
+                and g_sales_volume = #{gSalesVolume}
+            </if>
+            <if test="gBuyPersonTime != null">
+                and g_buy_person_time = #{gBuyPersonTime}
+            </if>
+            <if test="gStock != null">
+                and g_stock = #{gStock}
+            </if>
+            <if test="gStorageTime != null">
+                and g_storage_time = #{gStorageTime}
+            </if>
+            <if test="gRemovalTime != null">
+                and g_removal_time = #{gRemovalTime}
+            </if>
+            <if test="gStatus != null">
+                and g_status = #{gStatus}
+            </if>
+            <if test="es1 != null and es1 != ''">
+                and es_1 = #{es1}
+            </if>
+            <if test="es2 != null and es2 != ''">
+                and es_2 = #{es2}
+            </if>
+            <if test="es3 != null and es3 != ''">
+                and es_3 = #{es3}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from goods
+        <where>
+            <if test="gId != null">
+                and g_id = #{gId}
+            </if>
+            <if test="cId != null">
+                and c_id = #{cId}
+            </if>
+            <if test="gName != null and gName != ''">
+                and g_name = #{gName}
+            </if>
+            <if test="gPrice != null">
+                and g_price = #{gPrice}
+            </if>
+            <if test="gIsdiscount != null">
+                and g_isdiscount = #{gIsdiscount}
+            </if>
+            <if test="gDescribe != null and gDescribe != ''">
+                and g_describe = #{gDescribe}
+            </if>
+            <if test="gSalesVolume != null">
+                and g_sales_volume = #{gSalesVolume}
+            </if>
+            <if test="gBuyPersonTime != null">
+                and g_buy_person_time = #{gBuyPersonTime}
+            </if>
+            <if test="gStock != null">
+                and g_stock = #{gStock}
+            </if>
+            <if test="gStorageTime != null">
+                and g_storage_time = #{gStorageTime}
+            </if>
+            <if test="gRemovalTime != null">
+                and g_removal_time = #{gRemovalTime}
+            </if>
+            <if test="gStatus != null">
+                and g_status = #{gStatus}
+            </if>
+            <if test="es1 != null and es1 != ''">
+                and es_1 = #{es1}
+            </if>
+            <if test="es2 != null and es2 != ''">
+                and es_2 = #{es2}
+            </if>
+            <if test="es3 != null and es3 != ''">
+                and es_3 = #{es3}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="gId" useGeneratedKeys="true">
+        insert into goods(c_id, g_name, g_price, g_isdiscount, g_describe, g_sales_volume, g_buy_person_time, g_stock,
+                          g_storage_time, g_removal_time, g_status, es_1, es_2, es_3)
+        values (#{cId}, #{gName}, #{gPrice}, #{gIsdiscount}, #{gDescribe}, #{gSalesVolume}, #{gBuyPersonTime},
+                #{gStock}, #{gStorageTime}, #{gRemovalTime}, #{gStatus}, #{es1}, #{es2}, #{es3})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="gId" useGeneratedKeys="true">
+        insert into goods(c_id, g_name, g_price, g_isdiscount, g_describe, g_sales_volume, g_buy_person_time, g_stock,
+        g_storage_time, g_removal_time, g_status, es_1, es_2, es_3)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.cId}, #{entity.gName}, #{entity.gPrice}, #{entity.gIsdiscount}, #{entity.gDescribe},
+            #{entity.gSalesVolume}, #{entity.gBuyPersonTime}, #{entity.gStock}, #{entity.gStorageTime},
+            #{entity.gRemovalTime}, #{entity.gStatus}, #{entity.es1}, #{entity.es2}, #{entity.es3})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="gId" useGeneratedKeys="true">
+        insert into goods(c_id, g_name, g_price, g_isdiscount, g_describe, g_sales_volume, g_buy_person_time, g_stock,
+        g_storage_time, g_removal_time, g_status, es_1, es_2, es_3)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.cId}, #{entity.gName}, #{entity.gPrice}, #{entity.gIsdiscount}, #{entity.gDescribe},
+            #{entity.gSalesVolume}, #{entity.gBuyPersonTime}, #{entity.gStock}, #{entity.gStorageTime},
+            #{entity.gRemovalTime}, #{entity.gStatus}, #{entity.es1}, #{entity.es2}, #{entity.es3})
+        </foreach>
+        on duplicate key update
+        c_id = values(c_id),
+        g_name = values(g_name),
+        g_price = values(g_price),
+        g_isdiscount = values(g_isdiscount),
+        g_describe = values(g_describe),
+        g_sales_volume = values(g_sales_volume),
+        g_buy_person_time = values(g_buy_person_time),
+        g_stock = values(g_stock),
+        g_storage_time = values(g_storage_time),
+        g_removal_time = values(g_removal_time),
+        g_status = values(g_status),
+        es_1 = values(es_1),
+        es_2 = values(es_2),
+        es_3 = values(es_3)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update goods
+        <set>
+            <if test="cId != null">
+                c_id = #{cId},
+            </if>
+            <if test="gName != null and gName != ''">
+                g_name = #{gName},
+            </if>
+            <if test="gPrice != null">
+                g_price = #{gPrice},
+            </if>
+            <if test="gIsdiscount != null">
+                g_isdiscount = #{gIsdiscount},
+            </if>
+            <if test="gDescribe != null and gDescribe != ''">
+                g_describe = #{gDescribe},
+            </if>
+            <if test="gSalesVolume != null">
+                g_sales_volume = #{gSalesVolume},
+            </if>
+            <if test="gBuyPersonTime != null">
+                g_buy_person_time = #{gBuyPersonTime},
+            </if>
+            <if test="gStock != null">
+                g_stock = #{gStock},
+            </if>
+            <if test="gStorageTime != null">
+                g_storage_time = #{gStorageTime},
+            </if>
+            <if test="gRemovalTime != null">
+                g_removal_time = #{gRemovalTime},
+            </if>
+            <if test="gStatus != null">
+                g_status = #{gStatus},
+            </if>
+            <if test="es1 != null and es1 != ''">
+                es_1 = #{es1},
+            </if>
+            <if test="es2 != null and es2 != ''">
+                es_2 = #{es2},
+            </if>
+            <if test="es3 != null and es3 != ''">
+                es_3 = #{es3},
+            </if>
+        </set>
+        where g_id = #{gId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from goods
+        where g_id = #{gId}
+    </delete>
+
+</mapper>
+

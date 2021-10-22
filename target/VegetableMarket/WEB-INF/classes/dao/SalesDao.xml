@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zs.dao.SalesDao">
+
+    <resultMap type="com.zs.entity.Sales" id="SalesMap">
+        <result property="sId" column="s_id" jdbcType="INTEGER"/>
+        <result property="sDateTime" column="s_date_time" jdbcType="TIMESTAMP"/>
+        <result property="cId" column="c_id" jdbcType="INTEGER"/>
+        <result property="sOrderTotal" column="s_order_total" jdbcType="INTEGER"/>
+        <result property="sTotal" column="s_total" jdbcType="VARCHAR"/>
+        <result property="sTotalWeight" column="s_total_weight" jdbcType="VARCHAR"/>
+        <result property="sFreightPrice" column="s_freight_price" jdbcType="VARCHAR"/>
+        <result property="es1" column="es_1" jdbcType="VARCHAR"/>
+        <result property="es2" column="es_2" jdbcType="VARCHAR"/>
+        <result property="es3" column="es_3" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="SalesMap">
+        select s_id,
+               s_date_time,
+               c_id,
+               s_order_total,
+               s_total,
+               s_total_weight,
+               s_freight_price,
+               es_1,
+               es_2,
+               es_3
+        from sales
+        where s_id = #{sId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="SalesMap">
+        select
+        s_id, s_date_time, c_id, s_order_total, s_total, s_total_weight, s_freight_price, es_1, es_2, es_3
+        from sales
+        <where>
+            <if test="sId != null">
+                and s_id = #{sId}
+            </if>
+            <if test="sDateTime != null">
+                and s_date_time = #{sDateTime}
+            </if>
+            <if test="cId != null">
+                and c_id = #{cId}
+            </if>
+            <if test="sOrderTotal != null">
+                and s_order_total = #{sOrderTotal}
+            </if>
+            <if test="sTotal != null">
+                and s_total = #{sTotal}
+            </if>
+            <if test="sTotalWeight != null">
+                and s_total_weight = #{sTotalWeight}
+            </if>
+            <if test="sFreightPrice != null">
+                and s_freight_price = #{sFreightPrice}
+            </if>
+            <if test="es1 != null and es1 != ''">
+                and es_1 = #{es1}
+            </if>
+            <if test="es2 != null and es2 != ''">
+                and es_2 = #{es2}
+            </if>
+            <if test="es3 != null and es3 != ''">
+                and es_3 = #{es3}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from sales
+        <where>
+            <if test="sId != null">
+                and s_id = #{sId}
+            </if>
+            <if test="sDateTime != null">
+                and s_date_time = #{sDateTime}
+            </if>
+            <if test="cId != null">
+                and c_id = #{cId}
+            </if>
+            <if test="sOrderTotal != null">
+                and s_order_total = #{sOrderTotal}
+            </if>
+            <if test="sTotal != null">
+                and s_total = #{sTotal}
+            </if>
+            <if test="sTotalWeight != null">
+                and s_total_weight = #{sTotalWeight}
+            </if>
+            <if test="sFreightPrice != null">
+                and s_freight_price = #{sFreightPrice}
+            </if>
+            <if test="es1 != null and es1 != ''">
+                and es_1 = #{es1}
+            </if>
+            <if test="es2 != null and es2 != ''">
+                and es_2 = #{es2}
+            </if>
+            <if test="es3 != null and es3 != ''">
+                and es_3 = #{es3}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="sId" useGeneratedKeys="true">
+        insert into sales(s_date_time, c_id, s_order_total, s_total, s_total_weight, s_freight_price, es_1, es_2, es_3)
+        values (#{sDateTime}, #{cId}, #{sOrderTotal}, #{sTotal}, #{sTotalWeight}, #{sFreightPrice}, #{es1}, #{es2},
+                #{es3})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="sId" useGeneratedKeys="true">
+        insert into sales(s_date_time, c_id, s_order_total, s_total, s_total_weight, s_freight_price, es_1, es_2, es_3)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.sDateTime}, #{entity.cId}, #{entity.sOrderTotal}, #{entity.sTotal}, #{entity.sTotalWeight},
+            #{entity.sFreightPrice}, #{entity.es1}, #{entity.es2}, #{entity.es3})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="sId" useGeneratedKeys="true">
+        insert into sales(s_date_time, c_id, s_order_total, s_total, s_total_weight, s_freight_price, es_1, es_2, es_3)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.sDateTime}, #{entity.cId}, #{entity.sOrderTotal}, #{entity.sTotal}, #{entity.sTotalWeight},
+            #{entity.sFreightPrice}, #{entity.es1}, #{entity.es2}, #{entity.es3})
+        </foreach>
+        on duplicate key update
+        s_date_time = values(s_date_time),
+        c_id = values(c_id),
+        s_order_total = values(s_order_total),
+        s_total = values(s_total),
+        s_total_weight = values(s_total_weight),
+        s_freight_price = values(s_freight_price),
+        es_1 = values(es_1),
+        es_2 = values(es_2),
+        es_3 = values(es_3)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update sales
+        <set>
+            <if test="sDateTime != null">
+                s_date_time = #{sDateTime},
+            </if>
+            <if test="cId != null">
+                c_id = #{cId},
+            </if>
+            <if test="sOrderTotal != null">
+                s_order_total = #{sOrderTotal},
+            </if>
+            <if test="sTotal != null">
+                s_total = #{sTotal},
+            </if>
+            <if test="sTotalWeight != null">
+                s_total_weight = #{sTotalWeight},
+            </if>
+            <if test="sFreightPrice != null">
+                s_freight_price = #{sFreightPrice},
+            </if>
+            <if test="es1 != null and es1 != ''">
+                es_1 = #{es1},
+            </if>
+            <if test="es2 != null and es2 != ''">
+                es_2 = #{es2},
+            </if>
+            <if test="es3 != null and es3 != ''">
+                es_3 = #{es3},
+            </if>
+        </set>
+        where s_id = #{sId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from sales
+        where s_id = #{sId}
+    </delete>
+
+</mapper>
+
