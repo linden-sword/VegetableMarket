@@ -23,6 +23,14 @@ public interface TokenDao {
     Token queryById(Integer toId);
 
     /**
+     * 通过UUID查询单条数据
+     *
+     * @param toUuid 查询条件
+     * @return 实例对象
+     */
+    Token queryByUUId(String toUuid);
+
+    /**
      * 查询指定行数据
      *
      * @param token    查询条件

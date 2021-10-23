@@ -23,6 +23,14 @@ public interface UsersDao {
     Users queryById(Integer uId);
 
     /**
+     * 通过username查询单条数据
+     *
+     * @param username 主键
+     * @return 实例对象
+     */
+    Users queryByUsername(String username);
+
+    /**
      * 查询指定行数据
      *
      * @param users    查询条件

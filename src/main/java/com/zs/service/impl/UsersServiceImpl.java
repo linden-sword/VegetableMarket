@@ -21,6 +21,18 @@ public class UsersServiceImpl implements UsersService {
     @Resource
     private UsersDao usersDao;
 
+    @Override
+    public int login(String username, String passwd) {
+        Users users = usersDao.queryByUsername(username);
+        if (users != null){
+            if (users.getPasswd().equals(passwd)){
+                return 1;
+            }
+            return 2;
+        }
+        return 0;
+    }
+
     /**
      * 通过ID查询单条数据
      *
@@ -30,6 +42,11 @@ public class UsersServiceImpl implements UsersService {
     @Override
     public Users queryById(Integer uId) {
         return this.usersDao.queryById(uId);
+    }
+
+    @Override
+    public Users queryByUsername(String username) {
+        return usersDao.queryByUsername(username);
     }
 
     /**

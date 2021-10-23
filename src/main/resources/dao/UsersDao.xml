@@ -37,6 +37,25 @@
         where u_id = #{uId}
     </select>
 
+    <!--查询单个by Username-->
+    <select id="queryByUsername" resultMap="UsersMap">
+        select u_id,
+               username,
+               passwd,
+               u_email,
+               u_tel,
+               u_sex,
+               u_datetime,
+               u_photo,
+               u_role,
+               u_status,
+               es_1,
+               es_2,
+               es_3
+        from users
+        where username = #{username}
+    </select>
+
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="UsersMap">
         select

@@ -21,6 +21,14 @@ public interface TokenService {
     Token queryById(Integer toId);
 
     /**
+     * 通过UUID查询单条数据
+     *
+     * @param toUuid 查询条件
+     * @return 实例对象
+     */
+    Token queryByUUId(String toUuid);
+
+    /**
      * 分页查询
      *
      * @param token       筛选条件

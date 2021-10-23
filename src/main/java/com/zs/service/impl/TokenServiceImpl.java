@@ -33,6 +33,17 @@ public class TokenServiceImpl implements TokenService {
     }
 
     /**
+     * 通过UUID查询单条数据
+     *
+     * @param toUuid 查询条件
+     * @return
+     */
+    @Override
+    public Token queryByUUId(String toUuid) {
+        return tokenDao.queryByUUId(toUuid);
+    }
+
+    /**
      * 分页查询
      *
      * @param token       筛选条件

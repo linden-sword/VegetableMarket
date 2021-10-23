@@ -11,6 +11,14 @@ import org.springframework.data.domain.PageRequest;
  * @since 2021-10-22 21:38:12
  */
 public interface UsersService {
+    /**
+     * 登录
+     *
+     * @param username
+     * @param passwd
+     * @return
+     */
+    int login(String username,String passwd);
 
     /**
      * 通过ID查询单条数据
@@ -19,6 +27,14 @@ public interface UsersService {
      * @return 实例对象
      */
     Users queryById(Integer uId);
+
+    /**
+     * 通过username查询单条数据
+     *
+     * @param username 主键
+     * @return 实例对象
+     */
+    Users queryByUsername(String username);
 
     /**
      * 分页查询

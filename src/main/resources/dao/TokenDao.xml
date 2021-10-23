@@ -27,6 +27,20 @@
         where to_id = #{toId}
     </select>
 
+    <!--查询单个from UUID-->
+    <select id="queryByUUId" resultMap="TokenMap">
+        select to_id,
+               to_uuid,
+               to_login,
+               username,
+               u_id,
+               es_1,
+               es_2,
+               es_3
+        from token
+        where to_uuid = #{toUuid}
+    </select>
+
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="TokenMap">
         select

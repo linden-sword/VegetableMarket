@@ -1,5 +1,7 @@
 package com.zs.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 import java.io.Serializable;
 
@@ -24,6 +26,7 @@ public class Users implements Serializable {
 
     private String uSex;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", locale = "zh", timezone = "GMT+8")
     private Date uDatetime;
 
     private String uPhoto;
