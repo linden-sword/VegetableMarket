@@ -39,7 +39,7 @@ public class UsersController {
      * @return
      */
     @GetMapping("/VegetableMarket/User")
-    @CrossOrigin(origins="http://127.0.0.1:5502",allowCredentials="true")
+//    @CrossOrigin(origins="http://127.0.0.1:5502",allowCredentials="true")
     public com.zs.util.ResponseEntity<String> login(String username, String passwd, HttpServletRequest request, HttpServletResponse response) {
         System.out.println("====== 登录信息 ：" + username + " ," + passwd + " ======");
 
@@ -47,10 +47,13 @@ public class UsersController {
         if (flag == 1) {
             //登陆成功
             String tokenString = (String) request.getAttribute("token");
+            //从数据库查token
             Token token = tokenService.queryByUUId(tokenString);
             token.setToLogin("true");
             token.setUsername(username);
             token.setUId(usersService.queryByUsername(username).getUId());
+            //修改数据库中token
+            tokenService.update(token);
 
             return new com.zs.util.ResponseEntity<>(1000, "Success", "登陆成功");
         }

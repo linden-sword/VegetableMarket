@@ -41,6 +41,27 @@
         where g_id = #{gId}
     </select>
 
+    <!--查询by cId-->
+    <select id="queryByCId" resultMap="GoodsMap">
+        select g_id,
+               c_id,
+               g_name,
+               g_price,
+               g_isdiscount,
+               g_describe,
+               g_sales_volume,
+               g_buy_person_time,
+               g_stock,
+               g_storage_time,
+               g_removal_time,
+               g_status,
+               es_1,
+               es_2,
+               es_3
+        from goods
+        where c_id = #{cId}
+    </select>
+
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="GoodsMap">
         select

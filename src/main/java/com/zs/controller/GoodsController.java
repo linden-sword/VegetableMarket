@@ -1,10 +1,7 @@
 package com.zs.controller;
 
-import com.zs.entity.Goods;
+import com.github.pagehelper.PageInfo;
 import com.zs.service.GoodsService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -16,7 +13,6 @@ import javax.annotation.Resource;
  * @since 2021-10-22 21:38:07
  */
 @RestController
-@RequestMapping("goods")
 public class GoodsController {
     /**
      * 服务对象
@@ -25,15 +21,19 @@ public class GoodsController {
     private GoodsService goodsService;
 
     /**
-     * 分页查询
+     * 查询分类下的商品
      *
-     * @param goods       筛选条件
-     * @param pageRequest 分页对象
-     * @return 查询结果
+     * @param cId
+     * @return
      */
-    @GetMapping
-    public ResponseEntity<Page<Goods>> queryByPage(Goods goods, PageRequest pageRequest) {
-        return ResponseEntity.ok(this.goodsService.queryByPage(goods, pageRequest));
+    @GetMapping("/VegetableMarket/goods/cId/{cId}")
+    public com.zs.util.ResponseEntity<PageInfo> queryGoodsBycId(@PathVariable("cId") Integer cId, Integer pageNum){
+        System.out.println("=== pageNum:"+pageNum);
+        com.github.pagehelper.PageInfo pageInfo = goodsService.queryByCId(cId,pageNum);
+        if (pageInfo.getList().isEmpty()){
+            return new com.zs.util.ResponseEntity<>(1002,"Error",null);
+        }
+        return new com.zs.util.ResponseEntity<>(1000,"Success",pageInfo);
     }
 
     /**
@@ -42,10 +42,10 @@ public class GoodsController {
      * @param id 主键
      * @return 单条数据
      */
-    @GetMapping("{id}")
-    public ResponseEntity<Goods> queryById(@PathVariable("id") Integer id) {
-        return ResponseEntity.ok(this.goodsService.queryById(id));
-    }
+//    @GetMapping("/VegetableMarket/goods/id/{id}")
+//    public ResponseEntity<Goods> queryById(@PathVariable("id") Integer id) {
+//        return ResponseEntity.ok(this.goodsService.queryById(id));
+//    }
 
     /**
      * 新增数据
@@ -53,10 +53,10 @@ public class GoodsController {
      * @param goods 实体
      * @return 新增结果
      */
-    @PostMapping
-    public ResponseEntity<Goods> add(Goods goods) {
-        return ResponseEntity.ok(this.goodsService.insert(goods));
-    }
+//    @PostMapping
+//    public ResponseEntity<Goods> add(Goods goods) {
+//        return ResponseEntity.ok(this.goodsService.insert(goods));
+//    }
 
     /**
      * 编辑数据
@@ -64,10 +64,10 @@ public class GoodsController {
      * @param goods 实体
      * @return 编辑结果
      */
-    @PutMapping
-    public ResponseEntity<Goods> edit(Goods goods) {
-        return ResponseEntity.ok(this.goodsService.update(goods));
-    }
+//    @PutMapping
+//    public ResponseEntity<Goods> edit(Goods goods) {
+//        return ResponseEntity.ok(this.goodsService.update(goods));
+//    }
 
     /**
      * 删除数据
@@ -75,10 +75,10 @@ public class GoodsController {
      * @param id 主键
      * @return 删除是否成功
      */
-    @DeleteMapping
-    public ResponseEntity<Boolean> deleteById(Integer id) {
-        return ResponseEntity.ok(this.goodsService.deleteById(id));
-    }
+//    @DeleteMapping
+//    public ResponseEntity<Boolean> deleteById(Integer id) {
+//        return ResponseEntity.ok(this.goodsService.deleteById(id));
+//    }
 
 }
 

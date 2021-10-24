@@ -23,6 +23,15 @@ public interface GoodsDao {
     Goods queryById(Integer gId);
 
     /**
+     * 通过商品分类查询多条数据
+     *
+     * @param cId 主键
+     * @return 实例对象
+     */
+    List<Goods> queryByCId(Integer cId);
+
+
+    /**
      * 查询指定行数据
      *
      * @param goods    查询条件

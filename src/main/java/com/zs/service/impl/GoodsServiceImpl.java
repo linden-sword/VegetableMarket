@@ -1,5 +1,7 @@
 package com.zs.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.zs.entity.Goods;
 import com.zs.dao.GoodsDao;
 import com.zs.service.GoodsService;
@@ -9,6 +11,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * (Goods)表服务实现类
@@ -30,6 +33,25 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     public Goods queryById(Integer gId) {
         return this.goodsDao.queryById(gId);
+    }
+
+
+    /**
+     * 通过cId查询多个商品__分页
+     *
+     * @param cId 主键
+     * @return List<Goods>
+     */
+    @Override
+    public PageInfo queryByCId(Integer cId, int pageNum) {
+        //pageNum和pageSize
+        PageHelper.startPage(pageNum, 15);
+        List<Goods> goodsList = goodsDao.queryByCId(cId);
+        //创建pageInfo对象
+        com.github.pagehelper.PageInfo pageInfo = new com.github.pagehelper.PageInfo(goodsList);
+        //返回pageInfo
+        System.out.println(pageInfo);
+        return pageInfo;
     }
 
     /**
