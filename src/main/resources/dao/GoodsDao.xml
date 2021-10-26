@@ -62,114 +62,35 @@
         where c_id = #{cId}
     </select>
 
-    <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="GoodsMap">
-        select
-        g_id, c_id, g_name, g_price, g_isdiscount, g_describe, g_sales_volume, g_buy_person_time, g_stock,
-        g_storage_time, g_removal_time, g_status, es_1, es_2, es_3
+    <!--商品信息模糊查询(名称模糊查询、描述模糊查询)-->
+    <select id="queryByGNameLike" resultMap="GoodsMap">
+        select g_id,
+               c_id,
+               g_name,
+               g_price,
+               g_isdiscount,
+               g_describe,
+               g_sales_volume,
+               g_buy_person_time,
+               g_stock,
+               g_storage_time,
+               g_removal_time,
+               g_status,
+               es_1,
+               es_2,
+               es_3
         from goods
         <where>
-            <if test="gId != null">
-                and g_id = #{gId}
+            <if test="gName !=  null">
+                and g_name like "%"#{gName}"%"
             </if>
-            <if test="cId != null">
-                and c_id = #{cId}
-            </if>
-            <if test="gName != null and gName != ''">
-                and g_name = #{gName}
-            </if>
-            <if test="gPrice != null">
-                and g_price = #{gPrice}
-            </if>
-            <if test="gIsdiscount != null">
-                and g_isdiscount = #{gIsdiscount}
-            </if>
-            <if test="gDescribe != null and gDescribe != ''">
-                and g_describe = #{gDescribe}
-            </if>
-            <if test="gSalesVolume != null">
-                and g_sales_volume = #{gSalesVolume}
-            </if>
-            <if test="gBuyPersonTime != null">
-                and g_buy_person_time = #{gBuyPersonTime}
-            </if>
-            <if test="gStock != null">
-                and g_stock = #{gStock}
-            </if>
-            <if test="gStorageTime != null">
-                and g_storage_time = #{gStorageTime}
-            </if>
-            <if test="gRemovalTime != null">
-                and g_removal_time = #{gRemovalTime}
-            </if>
-            <if test="gStatus != null">
-                and g_status = #{gStatus}
-            </if>
-            <if test="es1 != null and es1 != ''">
-                and es_1 = #{es1}
-            </if>
-            <if test="es2 != null and es2 != ''">
-                and es_2 = #{es2}
-            </if>
-            <if test="es3 != null and es3 != ''">
-                and es_3 = #{es3}
+            <if test="gDescribe !=  null">
+                and g_describe like "%"#{gDescribe}"%"
             </if>
         </where>
-        limit #{pageable.offset}, #{pageable.pageSize}
     </select>
 
-    <!--统计总行数-->
-    <select id="count" resultType="java.lang.Long">
-        select count(1)
-        from goods
-        <where>
-            <if test="gId != null">
-                and g_id = #{gId}
-            </if>
-            <if test="cId != null">
-                and c_id = #{cId}
-            </if>
-            <if test="gName != null and gName != ''">
-                and g_name = #{gName}
-            </if>
-            <if test="gPrice != null">
-                and g_price = #{gPrice}
-            </if>
-            <if test="gIsdiscount != null">
-                and g_isdiscount = #{gIsdiscount}
-            </if>
-            <if test="gDescribe != null and gDescribe != ''">
-                and g_describe = #{gDescribe}
-            </if>
-            <if test="gSalesVolume != null">
-                and g_sales_volume = #{gSalesVolume}
-            </if>
-            <if test="gBuyPersonTime != null">
-                and g_buy_person_time = #{gBuyPersonTime}
-            </if>
-            <if test="gStock != null">
-                and g_stock = #{gStock}
-            </if>
-            <if test="gStorageTime != null">
-                and g_storage_time = #{gStorageTime}
-            </if>
-            <if test="gRemovalTime != null">
-                and g_removal_time = #{gRemovalTime}
-            </if>
-            <if test="gStatus != null">
-                and g_status = #{gStatus}
-            </if>
-            <if test="es1 != null and es1 != ''">
-                and es_1 = #{es1}
-            </if>
-            <if test="es2 != null and es2 != ''">
-                and es_2 = #{es2}
-            </if>
-            <if test="es3 != null and es3 != ''">
-                and es_3 = #{es3}
-            </if>
-        </where>
-    </select>
+
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="gId" useGeneratedKeys="true">

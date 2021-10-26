@@ -28,85 +28,7 @@
                es_2,
                es_3
         from address
-        where ad_id = #{adId}
-    </select>
-
-    <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="AddressMap">
-        select
-        ad_id, ad_name, ad_tel, ad_address, ad_zipCode, u_id, ad_default_address, es_1, es_2, es_3
-        from address
-        <where>
-            <if test="adId != null">
-                and ad_id = #{adId}
-            </if>
-            <if test="adName != null and adName != ''">
-                and ad_name = #{adName}
-            </if>
-            <if test="adTel != null and adTel != ''">
-                and ad_tel = #{adTel}
-            </if>
-            <if test="adAddress != null and adAddress != ''">
-                and ad_address = #{adAddress}
-            </if>
-            <if test="adZipcode != null and adZipcode != ''">
-                and ad_zipCode = #{adZipcode}
-            </if>
-            <if test="uId != null">
-                and u_id = #{uId}
-            </if>
-            <if test="adDefaultAddress != null">
-                and ad_default_address = #{adDefaultAddress}
-            </if>
-            <if test="es1 != null and es1 != ''">
-                and es_1 = #{es1}
-            </if>
-            <if test="es2 != null and es2 != ''">
-                and es_2 = #{es2}
-            </if>
-            <if test="es3 != null and es3 != ''">
-                and es_3 = #{es3}
-            </if>
-        </where>
-        limit #{pageable.offset}, #{pageable.pageSize}
-    </select>
-
-    <!--统计总行数-->
-    <select id="count" resultType="java.lang.Long">
-        select count(1)
-        from address
-        <where>
-            <if test="adId != null">
-                and ad_id = #{adId}
-            </if>
-            <if test="adName != null and adName != ''">
-                and ad_name = #{adName}
-            </if>
-            <if test="adTel != null and adTel != ''">
-                and ad_tel = #{adTel}
-            </if>
-            <if test="adAddress != null and adAddress != ''">
-                and ad_address = #{adAddress}
-            </if>
-            <if test="adZipcode != null and adZipcode != ''">
-                and ad_zipCode = #{adZipcode}
-            </if>
-            <if test="uId != null">
-                and u_id = #{uId}
-            </if>
-            <if test="adDefaultAddress != null">
-                and ad_default_address = #{adDefaultAddress}
-            </if>
-            <if test="es1 != null and es1 != ''">
-                and es_1 = #{es1}
-            </if>
-            <if test="es2 != null and es2 != ''">
-                and es_2 = #{es2}
-            </if>
-            <if test="es3 != null and es3 != ''">
-                and es_3 = #{es3}
-            </if>
-        </where>
+        where u_id = #{uId}
     </select>
 
     <!--新增所有列-->
@@ -115,67 +37,15 @@
         values (#{adName}, #{adTel}, #{adAddress}, #{adZipcode}, #{uId}, #{adDefaultAddress}, #{es1}, #{es2}, #{es3})
     </insert>
 
-    <insert id="insertBatch" keyProperty="adId" useGeneratedKeys="true">
-        insert into address(ad_name, ad_tel, ad_address, ad_zipCode, u_id, ad_default_address, es_1, es_2, es_3)
-        values
-        <foreach collection="entities" item="entity" separator=",">
-            (#{entity.adName}, #{entity.adTel}, #{entity.adAddress}, #{entity.adZipcode}, #{entity.uId},
-            #{entity.adDefaultAddress}, #{entity.es1}, #{entity.es2}, #{entity.es3})
-        </foreach>
-    </insert>
-
-    <insert id="insertOrUpdateBatch" keyProperty="adId" useGeneratedKeys="true">
-        insert into address(ad_name, ad_tel, ad_address, ad_zipCode, u_id, ad_default_address, es_1, es_2, es_3)
-        values
-        <foreach collection="entities" item="entity" separator=",">
-            (#{entity.adName}, #{entity.adTel}, #{entity.adAddress}, #{entity.adZipcode}, #{entity.uId},
-            #{entity.adDefaultAddress}, #{entity.es1}, #{entity.es2}, #{entity.es3})
-        </foreach>
-        on duplicate key update
-        ad_name = values(ad_name),
-        ad_tel = values(ad_tel),
-        ad_address = values(ad_address),
-        ad_zipCode = values(ad_zipCode),
-        u_id = values(u_id),
-        ad_default_address = values(ad_default_address),
-        es_1 = values(es_1),
-        es_2 = values(es_2),
-        es_3 = values(es_3)
-    </insert>
-
     <!--通过主键修改数据-->
     <update id="update">
         update address
-        <set>
-            <if test="adName != null and adName != ''">
-                ad_name = #{adName},
-            </if>
-            <if test="adTel != null and adTel != ''">
-                ad_tel = #{adTel},
-            </if>
-            <if test="adAddress != null and adAddress != ''">
-                ad_address = #{adAddress},
-            </if>
-            <if test="adZipcode != null and adZipcode != ''">
-                ad_zipCode = #{adZipcode},
-            </if>
-            <if test="uId != null">
-                u_id = #{uId},
-            </if>
-            <if test="adDefaultAddress != null">
-                ad_default_address = #{adDefaultAddress},
-            </if>
-            <if test="es1 != null and es1 != ''">
-                es_1 = #{es1},
-            </if>
-            <if test="es2 != null and es2 != ''">
-                es_2 = #{es2},
-            </if>
-            <if test="es3 != null and es3 != ''">
-                es_3 = #{es3},
-            </if>
-        </set>
-        where ad_id = #{adId}
+        set
+            ad_name = #{adName},
+            ad_tel = #{adTel},
+            ad_address = #{adAddress},
+            ad_zipCode = #{adZipcode}
+        where u_id = #{uId}
     </update>
 
     <!--通过主键删除-->
@@ -186,4 +56,3 @@
     </delete>
 
 </mapper>
-

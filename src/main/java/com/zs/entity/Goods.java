@@ -18,7 +18,7 @@ public class Goods implements Serializable {
 
     private String gName;
 
-    private Object gPrice;
+    private double gPrice;
 
     private Integer gIsdiscount;
 
@@ -28,7 +28,7 @@ public class Goods implements Serializable {
 
     private Integer gBuyPersonTime;
 
-    private Object gStock;
+    private double gStock;
 
     private Date gStorageTime;
 
@@ -67,11 +67,11 @@ public class Goods implements Serializable {
         this.gName = gName;
     }
 
-    public Object getGPrice() {
+    public double getGPrice() {
         return gPrice;
     }
 
-    public void setGPrice(Object gPrice) {
+    public void setGPrice(double gPrice) {
         this.gPrice = gPrice;
     }
 
@@ -107,11 +107,11 @@ public class Goods implements Serializable {
         this.gBuyPersonTime = gBuyPersonTime;
     }
 
-    public Object getGStock() {
+    public double getGStock() {
         return gStock;
     }
 
-    public void setGStock(Object gStock) {
+    public void setGStock(double gStock) {
         this.gStock = gStock;
     }
 

@@ -30,14 +30,15 @@ public interface GoodsService {
      */
     com.github.pagehelper.PageInfo queryByCId(Integer cId,int pageNum);
 
+
     /**
-     * 分页查询
+     * 通过商品名称、描述 模糊查询
      *
-     * @param goods       筛选条件
-     * @param pageRequest 分页对象
-     * @return 查询结果
+     * @param goods
+     * @return 实例对象
      */
-    Page<Goods> queryByPage(Goods goods, PageRequest pageRequest);
+    com.github.pagehelper.PageInfo queryByGNameLike(Goods goods,int pageNum);
+
 
     /**
      * 新增数据

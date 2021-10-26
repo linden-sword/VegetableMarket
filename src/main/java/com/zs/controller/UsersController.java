@@ -40,7 +40,7 @@ public class UsersController {
      */
     @GetMapping("/VegetableMarket/User")
 //    @CrossOrigin(origins="http://127.0.0.1:5502",allowCredentials="true")
-    public com.zs.util.ResponseEntity<String> login(String username, String passwd, HttpServletRequest request, HttpServletResponse response) {
+    public com.zs.util.ResponseEntity<Token> login(String username, String passwd, HttpServletRequest request, HttpServletResponse response) {
         System.out.println("====== 登录信息 ：" + username + " ," + passwd + " ======");
 
         int flag = usersService.login(username, passwd);
@@ -55,15 +55,15 @@ public class UsersController {
             //修改数据库中token
             tokenService.update(token);
 
-            return new com.zs.util.ResponseEntity<>(1000, "Success", "登陆成功");
+            return new com.zs.util.ResponseEntity<>(1000, "Success:登陆成功", token);
         }
         if (flag == 2) {
-            return new com.zs.util.ResponseEntity<>(1002, "Error", "密码错误");
+            return new com.zs.util.ResponseEntity<>(1002, "Error:密码错误", null);
         }
         if (flag == 0) {
-            return new com.zs.util.ResponseEntity<>(1002, "Error", "用户不存在");
+            return new com.zs.util.ResponseEntity<>(1002, "Error:用户不存在", null);
         }
-        return new com.zs.util.ResponseEntity<>(1004, "Error", "Service:未知错误");
+        return new com.zs.util.ResponseEntity<>(1004, "Error:Service:未知错误", null);
     }
 
 
@@ -99,6 +99,15 @@ public class UsersController {
     @PostMapping("/VegetableMarket/User")
     public ResponseEntity<Users> add(Users users) {
         return ResponseEntity.ok(this.usersService.insert(users));
+    }
+
+    /**
+     * 编辑数据
+     */
+    @PutMapping("/VegetableMarket/change")
+    public com.zs.util.ResponseEntity<String> editByUserName(Users users) {
+        this.usersService.updateByUserName(users);
+        return new com.zs.util.ResponseEntity<>(1000, "Success", "修改成功");
     }
 
     /**

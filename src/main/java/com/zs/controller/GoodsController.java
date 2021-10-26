@@ -1,10 +1,13 @@
 package com.zs.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.zs.entity.Goods;
 import com.zs.service.GoodsService;
+import com.zs.util.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * (Goods)表控制层
@@ -21,7 +24,7 @@ public class GoodsController {
     private GoodsService goodsService;
 
     /**
-     * 查询分类下的商品
+     * 查询分类下的商品__分页
      *
      * @param cId
      * @return
@@ -37,15 +40,47 @@ public class GoodsController {
     }
 
     /**
-     * 通过主键查询单条数据
+     * 搜索商品__名称、描述，模糊查询
      *
-     * @param id 主键
-     * @return 单条数据
+     * @param searchString
+     * @return
      */
+    @GetMapping("/VegetableMarket/goods")
+    public com.zs.util.ResponseEntity<PageInfo> queryByGNameLike(String searchString,Integer pageNum){
+        System.out.println("=== searchString:"+searchString);
+        Goods goods = new Goods();
+        goods.setGName(searchString);
+        com.github.pagehelper.PageInfo pageInfo = goodsService.queryByGNameLike(goods,pageNum);
+        if (pageInfo.getList().isEmpty()){
+            return new com.zs.util.ResponseEntity<>(1002,"Error",null);
+        }
+        return new com.zs.util.ResponseEntity<>(1000,"Success",pageInfo);
+    }
+
+//    /**
+//     * 通过主键查询单条数据
+//     *
+//     * @param id 主键
+//     * @return 单条数据
+//     */
 //    @GetMapping("/VegetableMarket/goods/id/{id}")
 //    public ResponseEntity<Goods> queryById(@PathVariable("id") Integer id) {
-//        return ResponseEntity.ok(this.goodsService.queryById(id));
+//        return new com.zs.util.ResponseEntity<>(1000,"Success",goodsService.queryById(id));
 //    }
+    /**
+     * 通过主键查询单条数据
+     *
+     * @param gId 主键
+     * @return 单条数据
+     */
+    @GetMapping("/VegetableMarket/goods/gId/{gId}")
+    public com.zs.util.ResponseEntity<Goods> queryById(@PathVariable("gId") Integer gId) {
+        Goods goods = goodsService.queryById(gId);
+        if (goods == null) {
+            return new com.zs.util.ResponseEntity<>(1002, "Error", null);
+        }
+        return new com.zs.util.ResponseEntity<>(1000, "Success", goods);
+    }
 
     /**
      * 新增数据
