@@ -4,6 +4,8 @@ import com.zs.entity.Shoppingcart;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
+import java.util.List;
+
 /**
  * (Shoppingcart)表服务接口
  *
@@ -20,6 +22,9 @@ public interface ShoppingcartService {
      */
     Shoppingcart queryById(Integer scId);
 
+
+
+    List<Shoppingcart> queryByUid(Integer uId);
     /**
      * 分页查询
      *
@@ -44,6 +49,8 @@ public interface ShoppingcartService {
      * @return 实例对象
      */
     Shoppingcart update(Shoppingcart shoppingcart);
+    Shoppingcart updateAdd(Shoppingcart shoppingcart);
+    Shoppingcart updatemul(Shoppingcart shoppingcart);
 
     /**
      * 通过主键删除数据

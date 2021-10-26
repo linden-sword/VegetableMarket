@@ -30,6 +30,11 @@ public interface UsersDao {
      */
     Users queryByUsername(String username);
 
+
+
+
+    List<Users> queryconsumer(int uRole);
+    List<Users> queryAnyByUsername(String username);
     /**
      * 查询指定行数据
      *

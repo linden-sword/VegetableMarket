@@ -92,6 +92,11 @@
         limit #{pageable.offset}, #{pageable.pageSize}
     </select>
 
+    <select id="queryAllordersPage" resultMap="OrdersMap">
+        select   o_id, u_id, o_time, o_status, o_total_price, o_remark, ad_id, o_pay_type, o_freight_price, o_idEnd,
+        o_pay_status, es_1, es_2, es_3
+        from orders
+    </select>
     <!--统计总行数-->
     <select id="count" resultType="java.lang.Long">
         select count(1)

@@ -26,7 +26,19 @@
         from shoppingcart
         where sc_id = #{scId}
     </select>
-
+    <!--查询单个-->
+    <select id="queryByUid" resultMap="ShoppingcartMap">
+        select sc_id,
+               u_id,
+               g_id,
+               sc_weight,
+               sc_addtime,
+               es_1,
+               es_2,
+               es_3
+        from shoppingcart
+        where u_id = #{uId}
+    </select>
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="ShoppingcartMap">
         select
@@ -154,6 +166,12 @@
         where sc_id = #{scId}
     </update>
 
+    <update id="updateAddWeight">
+update shoppingcart set sc_weight=sc_weight+1 where sc_id=#{scId}
+    </update>
+    <update id="updatemulWeight">
+update shoppingcart set sc_weight=sc_weight-1 where sc_id=#{scId}
+    </update>
     <!--通过主键删除-->
     <delete id="deleteById">
         delete

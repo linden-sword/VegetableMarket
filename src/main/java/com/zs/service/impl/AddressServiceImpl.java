@@ -22,28 +22,14 @@ public class AddressServiceImpl implements AddressService {
     private AddressDao addressDao;
 
     /**
-     * 通过ID查询单条数据
-     *
-     * @param adId 主键
-     * @return 实例对象
+     * 通过uID查询单条数据
      */
     @Override
-    public Address queryById(Integer adId) {
-        return this.addressDao.queryById(adId);
+    public Address queryById(Integer uId) {
+        return this.addressDao.queryById(uId);
     }
 
-    /**
-     * 分页查询
-     *
-     * @param address     筛选条件
-     * @param pageRequest 分页对象
-     * @return 查询结果
-     */
-    @Override
-    public Page<Address> queryByPage(Address address, PageRequest pageRequest) {
-        long total = this.addressDao.count(address);
-        return new PageImpl<>(this.addressDao.queryAllByLimit(address, pageRequest), pageRequest, total);
-    }
+
 
     /**
      * 新增数据
@@ -65,8 +51,10 @@ public class AddressServiceImpl implements AddressService {
      */
     @Override
     public Address update(Address address) {
-        this.addressDao.update(address);
-        return this.queryById(address.getAdId());
+
+        addressDao.update(address);
+
+        return queryById(address.getAdId());
     }
 
     /**

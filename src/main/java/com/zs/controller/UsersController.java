@@ -1,5 +1,6 @@
 package com.zs.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.zs.entity.Token;
 import com.zs.entity.Users;
 import com.zs.service.TokenService;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * (Users)表控制层
@@ -39,11 +41,12 @@ public class UsersController {
      * @return
      */
     @GetMapping("/VegetableMarket/User")
-    @CrossOrigin(origins="http://127.0.0.1:5502",allowCredentials="true")
-    public com.zs.util.ResponseEntity<String> login(String username, String passwd, HttpServletRequest request, HttpServletResponse response) {
-        System.out.println("====== 登录信息 ：" + username + " ," + passwd + " ======");
+//    @CrossOrigin(origins="http://127.0.0.1:5502",allowCredentials="true")
+    public com.zs.util.ResponseEntity<Token> login(String username, String passwd, HttpServletRequest request, HttpServletResponse response) {
+      //  System.out.println("====== 登录信息 ：" + username + " ," + passwd + " ======");
 
         int flag = usersService.login(username, passwd);
+        Users users = usersService.queryByUsername(username);
         if (flag == 1) {
             //登陆成功
             String tokenString = (String) request.getAttribute("token");
@@ -52,40 +55,79 @@ public class UsersController {
             token.setUsername(username);
             token.setUId(usersService.queryByUsername(username).getUId());
 
-            return new com.zs.util.ResponseEntity<>(1000, "Success", "登陆成功");
+            return new com.zs.util.ResponseEntity<>(1000, "Success：登陆成功", token);
         }
         if (flag == 2) {
-            return new com.zs.util.ResponseEntity<>(1002, "Error", "密码错误");
+            return new com.zs.util.ResponseEntity<>(1002, "Error：密码错误", null);
         }
         if (flag == 0) {
-            return new com.zs.util.ResponseEntity<>(1002, "Error", "用户不存在");
+            return new com.zs.util.ResponseEntity<>(1002, "Error：用户不存在", null);
         }
-        return new com.zs.util.ResponseEntity<>(1004, "Error", "Service:未知错误");
-    }
-
-
-    /**
-     * 分页查询
-     *
-     * @param users       筛选条件
-     * @param pageRequest 分页对象
-     * @return 查询结果
-     */
-    @GetMapping("/VegetableMarket/Users")
-    public ResponseEntity<Page<Users>> queryByPage(Users users, PageRequest pageRequest) {
-        return ResponseEntity.ok(this.usersService.queryByPage(users, pageRequest));
+        return new com.zs.util.ResponseEntity<>(1004, "Error：Service:未知错误", null);
     }
 
     /**
      * 通过主键查询单条数据
      *
-     * @param id 主键
+
      * @return 单条数据
      */
-    @GetMapping("/VegetableMarket/User/id/{id}")
-    public ResponseEntity<Users> queryById(@PathVariable("id") Integer id) {
-        return ResponseEntity.ok(this.usersService.queryById(id));
+    @GetMapping("/VegetableMarket/UserFindID")
+    public com.zs.util.ResponseEntity<Users> queryById(int uId) {
+        Users users = usersService.queryById(uId);
+        if (users != null) {
+            return new com.zs.util.ResponseEntity<>(1000, "Success：查询用户成功", users);
+        }else {
+            return new com.zs.util.ResponseEntity<>(1002, "Error：查询用户失敗", users);
+        }
     }
+    @GetMapping("/VegetableMarket/UserFindusername")
+    public com.zs.util.ResponseEntity<Users> queryByusername(String username) {
+        Users users = usersService.queryByUsername(username);
+        if (users.getUsername() != null) {
+            return new com.zs.util.ResponseEntity<>(1000, "Success：查询用户成功", users);
+        }else {
+            return new com.zs.util.ResponseEntity<>(1002, "Error：查询用户失敗", users);
+        }
+    }
+
+    @GetMapping("/VegetableMarket/UserFindAnyusername")
+    public com.zs.util.ResponseEntity<List<Users>> queryAnyByusername(String username) {
+
+        List<Users> usersList = usersService.queryAnyByUsername(username);
+        System.out.println("============"+usersList);
+        if (usersList.isEmpty()) {
+            return new com.zs.util.ResponseEntity<>(1002, "Error：查询用户失敗", null);
+        } else {
+            return new com.zs.util.ResponseEntity<>(1000, "Success：查询用户成功", usersList);
+        }
+    }
+    /**
+     * 查询分类下的商品__分页
+     *
+     * @return
+     */
+    @GetMapping("/VegetableMarket/UsersPage")
+    public com.zs.util.ResponseEntity<PageInfo> queryGoodsByuRolePage(int uRole, Integer pageNum){
+        com.github.pagehelper.PageInfo pageInfo = usersService.querycustomerPage(uRole,pageNum);
+        if (pageInfo.getList().isEmpty()){
+            return new com.zs.util.ResponseEntity<>(1002,"Error",null);
+        }
+        return new com.zs.util.ResponseEntity<>(1000,"Success",pageInfo);
+    }
+
+    @GetMapping("/VegetableMarket/customer")
+    public com.zs.util.ResponseEntity<List<Users>> querycustomer(Integer uRole) {
+        List<Users> usersList = usersService.querycustomer(uRole);
+        if (usersList == null || usersList.size() == 0) {
+            return new com.zs.util.ResponseEntity<>(1002, "Error：查询用户失败", usersList);
+
+        } else {
+            return new com.zs.util.ResponseEntity<>(1000, "Success：查询用户成功", usersList);
+
+        }
+    }
+
 
     /**
      * 新增数据
@@ -101,23 +143,51 @@ public class UsersController {
     /**
      * 编辑数据
      *
-     * @param users 实体
+ 
      * @return 编辑结果
      */
-    @PutMapping("/VegetableMarket/User")
-    public ResponseEntity<Users> edit(Users users) {
-        return ResponseEntity.ok(this.usersService.update(users));
+    @GetMapping("/VegetableMarket/UserUp")
+    public com.zs.util.ResponseEntity<Users> edit(Integer uid,String uStatus) {
+        Users uu = usersService.queryById(uid);
+        if (Integer.parseInt(uStatus)==1){
+            uu.setUStatus("0");
+        }else if (Integer.parseInt(uStatus) == 0){
+            uu.setUStatus("1");
+        }
+        Users update = usersService.update(uu);
+        if (update != null) {
+            return new com.zs.util.ResponseEntity<>(1000, "Success：修改用户status成功", update);
+        } else {
+            return new com.zs.util.ResponseEntity<>(1002, "Error：修改用户status失败", update);
+        }
+    }
+    @GetMapping("/VegetableMarket/UserUpPsw")
+    public com.zs.util.ResponseEntity<Users> editpsw(int uId,Users users){
+        Users uu = usersService.queryById(uId);
+        uu.setUsername(users.getUsername());
+        uu.setPasswd(users.getPasswd());
+        Users update = usersService.update(uu);
+        if (update != null) {
+            return new com.zs.util.ResponseEntity<>(1000, "Success：修改用户成功", update);
+        } else {
+            return new com.zs.util.ResponseEntity<>(1002, "Error：修改用户失败", update);
+        }
     }
 
     /**
      * 删除数据
-     *
-     * @param id 主键
+
      * @return 删除是否成功
      */
-    @DeleteMapping("/VegetableMarket/User")
-    public ResponseEntity<Boolean> deleteById(Integer id) {
-        return ResponseEntity.ok(this.usersService.deleteById(id));
+    @GetMapping("/VegetableMarket/UserDelete")
+    public com.zs.util.ResponseEntity<Boolean> deleteById(int uId) {
+        System.out.println(uId);
+        boolean b = usersService.deleteById(uId);
+        if (b) {
+            return new com.zs.util.ResponseEntity<>(1000, "Success：删除成功",b);
+        }else {
+            return new com.zs.util.ResponseEntity<>(1002, "Error：删除失败",b);
+        }
     }
 
 }

@@ -1,5 +1,6 @@
 package com.zs.service;
 
+import com.github.pagehelper.PageInfo;
 import com.zs.entity.Orders;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -29,6 +30,8 @@ public interface OrdersService {
      */
     Page<Orders> queryByPage(Orders orders, PageRequest pageRequest);
 
+
+    PageInfo queryordersPage(int pageNum);
     /**
      * 新增数据
      *

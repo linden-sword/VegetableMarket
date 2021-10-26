@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * (Classification)表控制层
@@ -16,35 +17,30 @@ import javax.annotation.Resource;
  * @since 2021-10-22 21:38:06
  */
 @RestController
-@RequestMapping("classification")
 public class ClassificationController {
-    /**
-     * 服务对象
-     */
+
     @Resource
     private ClassificationService classificationService;
 
-    /**
-     * 分页查询
-     *
-     * @param classification 筛选条件
-     * @param pageRequest    分页对象
-     * @return 查询结果
-     */
-    @GetMapping
-    public ResponseEntity<Page<Classification>> queryByPage(Classification classification, PageRequest pageRequest) {
-        return ResponseEntity.ok(this.classificationService.queryByPage(classification, pageRequest));
+
+    @GetMapping("/VegetableMarket/FindClassification")
+    public com.zs.util.ResponseEntity<List<Classification>> queryAll() {
+        List<Classification> classificationList = classificationService.FindAll();
+        if (classificationList.isEmpty()) {
+            return new com.zs.util.ResponseEntity<>(1002, "Error：查询用户失敗", null);
+        } else {
+            return new com.zs.util.ResponseEntity<>(1000, "Success:查询用户成功", classificationList);
+        }
     }
 
-    /**
-     * 通过主键查询单条数据
-     *
-     * @param id 主键
-     * @return 单条数据
-     */
-    @GetMapping("{id}")
-    public ResponseEntity<Classification> queryById(@PathVariable("id") Integer id) {
-        return ResponseEntity.ok(this.classificationService.queryById(id));
+    @GetMapping("/VegetableMarket/FindClassificationByName")
+    public com.zs.util.ResponseEntity<Classification> queryByName(String cName) {
+        Classification classification = classificationService.queryByName(cName);
+        if (classification==null) {
+            return new com.zs.util.ResponseEntity<>(1002, "Error：查询用户失敗", null);
+        } else {
+            return new com.zs.util.ResponseEntity<>(1000, "Success:查询用户成功", classification);
+        }
     }
 
     /**
@@ -53,32 +49,14 @@ public class ClassificationController {
      * @param classification 实体
      * @return 新增结果
      */
-    @PostMapping
+    @GetMapping("/VegetableMarket/AddClassification")
     public ResponseEntity<Classification> add(Classification classification) {
         return ResponseEntity.ok(this.classificationService.insert(classification));
     }
 
-    /**
-     * 编辑数据
-     *
-     * @param classification 实体
-     * @return 编辑结果
-     */
-    @PutMapping
-    public ResponseEntity<Classification> edit(Classification classification) {
-        return ResponseEntity.ok(this.classificationService.update(classification));
-    }
 
-    /**
-     * 删除数据
-     *
-     * @param id 主键
-     * @return 删除是否成功
-     */
-    @DeleteMapping
-    public ResponseEntity<Boolean> deleteById(Integer id) {
-        return ResponseEntity.ok(this.classificationService.deleteById(id));
-    }
+
+
 
 }
 

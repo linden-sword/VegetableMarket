@@ -13,21 +13,11 @@ import org.springframework.data.domain.PageRequest;
 public interface AddressService {
 
     /**
-     * 通过ID查询单条数据
-     *
-     * @param adId 主键
-     * @return 实例对象
-     */
-    Address queryById(Integer adId);
+     * 通过uID查询单条数据
 
-    /**
-     * 分页查询
-     *
-     * @param address     筛选条件
-     * @param pageRequest 分页对象
-     * @return 查询结果
      */
-    Page<Address> queryByPage(Address address, PageRequest pageRequest);
+    Address queryById(Integer uId);
+
 
     /**
      * 新增数据

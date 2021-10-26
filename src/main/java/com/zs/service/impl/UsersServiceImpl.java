@@ -1,5 +1,7 @@
 package com.zs.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.zs.entity.Users;
 import com.zs.dao.UsersDao;
 import com.zs.service.UsersService;
@@ -9,6 +11,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * (Users)表服务实现类
@@ -49,6 +52,27 @@ public class UsersServiceImpl implements UsersService {
         return usersDao.queryByUsername(username);
     }
 
+    @Override
+    public List<Users> querycustomer(int uRole) {
+        return usersDao.queryconsumer(uRole);
+    }
+
+    @Override
+    public List<Users> queryAnyByUsername(String username) {
+        return usersDao.queryAnyByUsername(username);
+    }
+
+    @Override
+    public PageInfo querycustomerPage(int uRole, int pageNum) {
+        //pageNum和pageSize
+        PageHelper.startPage(pageNum, 4);//pageSize应为15
+        List<Users> userList =usersDao.queryconsumer(uRole);
+        //创建pageInfo对象
+        com.github.pagehelper.PageInfo pageInfo = new com.github.pagehelper.PageInfo(userList);
+        //返回pageInfo
+      //  System.out.println(pageInfo);
+        return pageInfo;
+    }
     /**
      * 分页查询
      *

@@ -21,7 +21,13 @@ public interface ShoppingcartDao {
      * @return 实例对象
      */
     Shoppingcart queryById(Integer scId);
-
+    /**
+     * 通过uID查询单条数据
+     *
+     * @param uId 主键
+     * @return 实例对象
+     */
+    List<Shoppingcart> queryByUid(Integer uId);
     /**
      * 查询指定行数据
      *
@@ -72,6 +78,8 @@ public interface ShoppingcartDao {
      */
     int update(Shoppingcart shoppingcart);
 
+    int updateAddWeight(Shoppingcart shoppingcart);
+    int updatemulWeight(Shoppingcart shoppingcart);
     /**
      * 通过主键删除数据
      *

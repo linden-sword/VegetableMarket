@@ -1,13 +1,25 @@
 package com.zs.controller;
 
 import com.zs.entity.Goods;
+import com.zs.entity.Goodsparameters;
+import com.zs.entity.Goodsphoto;
 import com.zs.service.GoodsService;
+import com.zs.service.GoodsparametersService;
+import com.zs.service.GoodsphotoService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.io.File;
+import java.io.IOException;
+import java.security.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.UUID;
 
 /**
  * (Goods)表控制层
@@ -16,7 +28,6 @@ import javax.annotation.Resource;
  * @since 2021-10-22 21:38:07
  */
 @RestController
-@RequestMapping("goods")
 public class GoodsController {
     /**
      * 服务对象
@@ -24,28 +35,6 @@ public class GoodsController {
     @Resource
     private GoodsService goodsService;
 
-    /**
-     * 分页查询
-     *
-     * @param goods       筛选条件
-     * @param pageRequest 分页对象
-     * @return 查询结果
-     */
-    @GetMapping
-    public ResponseEntity<Page<Goods>> queryByPage(Goods goods, PageRequest pageRequest) {
-        return ResponseEntity.ok(this.goodsService.queryByPage(goods, pageRequest));
-    }
-
-    /**
-     * 通过主键查询单条数据
-     *
-     * @param id 主键
-     * @return 单条数据
-     */
-    @GetMapping("{id}")
-    public ResponseEntity<Goods> queryById(@PathVariable("id") Integer id) {
-        return ResponseEntity.ok(this.goodsService.queryById(id));
-    }
 
     /**
      * 新增数据
@@ -53,31 +42,18 @@ public class GoodsController {
      * @param goods 实体
      * @return 新增结果
      */
-    @PostMapping
-    public ResponseEntity<Goods> add(Goods goods) {
-        return ResponseEntity.ok(this.goodsService.insert(goods));
-    }
+    @GetMapping("/VegetableMarket/AddGoods")
+    public com.zs.util.ResponseEntity<Goods> add(Goods goods) {
+        Date date = new Date();
+        goods.setGStorageTime(date);
+        Goods goods1 = goodsService.insert(goods);
+        if (goods1 == null) {
+            return new com.zs.util.ResponseEntity<>(1002, "Error:添加失败", null);
+        } else {
+            return new com.zs.util.ResponseEntity<>(1001, "Error:添加了商品", goods1);
+        }
 
-    /**
-     * 编辑数据
-     *
-     * @param goods 实体
-     * @return 编辑结果
-     */
-    @PutMapping
-    public ResponseEntity<Goods> edit(Goods goods) {
-        return ResponseEntity.ok(this.goodsService.update(goods));
-    }
 
-    /**
-     * 删除数据
-     *
-     * @param id 主键
-     * @return 删除是否成功
-     */
-    @DeleteMapping
-    public ResponseEntity<Boolean> deleteById(Integer id) {
-        return ResponseEntity.ok(this.goodsService.deleteById(id));
     }
 
 }

@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * (Shoppingcart)表服务实现类
@@ -30,6 +31,11 @@ public class ShoppingcartServiceImpl implements ShoppingcartService {
     @Override
     public Shoppingcart queryById(Integer scId) {
         return this.shoppingcartDao.queryById(scId);
+    }
+
+    @Override
+    public List<Shoppingcart> queryByUid(Integer uId) {
+        return this.shoppingcartDao.queryByUid(uId);
     }
 
     /**
@@ -66,6 +72,18 @@ public class ShoppingcartServiceImpl implements ShoppingcartService {
     @Override
     public Shoppingcart update(Shoppingcart shoppingcart) {
         this.shoppingcartDao.update(shoppingcart);
+        return this.queryById(shoppingcart.getScId());
+    }
+
+    @Override
+    public Shoppingcart updateAdd(Shoppingcart shoppingcart) {
+       this.shoppingcartDao.updateAddWeight(shoppingcart);
+   return this.queryById(shoppingcart.getScId());
+    }
+
+    @Override
+    public Shoppingcart updatemul(Shoppingcart shoppingcart) {
+        this.shoppingcartDao.updatemulWeight(shoppingcart);
         return this.queryById(shoppingcart.getScId());
     }
 

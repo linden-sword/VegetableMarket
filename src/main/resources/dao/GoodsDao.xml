@@ -151,10 +151,8 @@
     </select>
 
     <!--新增所有列-->
-    <insert id="insert" keyProperty="gId" useGeneratedKeys="true">
-        insert into goods(c_id, g_name, g_price, g_isdiscount, g_describe, g_sales_volume, g_buy_person_time, g_stock,
-                          g_storage_time, g_removal_time, g_status, es_1, es_2, es_3)
-        values (#{cId}, #{gName}, #{gPrice}, #{gIsdiscount}, #{gDescribe}, #{gSalesVolume}, #{gBuyPersonTime},
+    <insert id="insert">
+        insert into goods values (null ,#{cId}, #{gName}, #{gPrice}, #{gIsdiscount}, #{gDescribe}, #{gSalesVolume}, #{gBuyPersonTime},
                 #{gStock}, #{gStorageTime}, #{gRemovalTime}, #{gStatus}, #{es1}, #{es2}, #{es3})
     </insert>
 

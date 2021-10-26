@@ -1,5 +1,6 @@
 package com.zs.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.zs.entity.Orders;
 import com.zs.service.OrdersService;
 import org.springframework.data.domain.Page;
@@ -16,7 +17,6 @@ import javax.annotation.Resource;
  * @since 2021-10-22 21:38:09
  */
 @RestController
-@RequestMapping("orders")
 public class OrdersController {
     /**
      * 服务对象
@@ -24,17 +24,7 @@ public class OrdersController {
     @Resource
     private OrdersService ordersService;
 
-    /**
-     * 分页查询
-     *
-     * @param orders      筛选条件
-     * @param pageRequest 分页对象
-     * @return 查询结果
-     */
-    @GetMapping
-    public ResponseEntity<Page<Orders>> queryByPage(Orders orders, PageRequest pageRequest) {
-        return ResponseEntity.ok(this.ordersService.queryByPage(orders, pageRequest));
-    }
+
 
     /**
      * 通过主键查询单条数据
@@ -47,13 +37,26 @@ public class OrdersController {
         return ResponseEntity.ok(this.ordersService.queryById(id));
     }
 
+
+
+    @GetMapping("/VegetableMarket/OrdersPage")
+    public com.zs.util.ResponseEntity<PageInfo> queryOrdersPage(int pageNum){
+        com.github.pagehelper.PageInfo pageInfo = ordersService.queryordersPage(pageNum);
+        System.out.println("===="+pageInfo);
+        if (pageInfo.getList().isEmpty()){
+            return new com.zs.util.ResponseEntity<>(1002,"Error",null);
+        }
+        return new com.zs.util.ResponseEntity<>(1000,"Success",pageInfo);
+    }
+
+
     /**
      * 新增数据
      *
      * @param orders 实体
      * @return 新增结果
      */
-    @PostMapping
+    @PostMapping("/VegetableMarket/OrdersPage")
     public ResponseEntity<Orders> add(Orders orders) {
         return ResponseEntity.ok(this.ordersService.insert(orders));
     }
@@ -64,7 +67,7 @@ public class OrdersController {
      * @param orders 实体
      * @return 编辑结果
      */
-    @PutMapping
+    @PutMapping("/VegetableMarket/OrdersPage")
     public ResponseEntity<Orders> edit(Orders orders) {
         return ResponseEntity.ok(this.ordersService.update(orders));
     }
@@ -75,7 +78,7 @@ public class OrdersController {
      * @param id 主键
      * @return 删除是否成功
      */
-    @DeleteMapping
+    @DeleteMapping("/VegetableMarket/OrdersPage")
     public ResponseEntity<Boolean> deleteById(String id) {
         return ResponseEntity.ok(this.ordersService.deleteById(id));
     }
