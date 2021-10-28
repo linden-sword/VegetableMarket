@@ -22,11 +22,7 @@ public interface ShoppingcartDao {
      */
     Shoppingcart queryById(Integer scId);
     /**
-<<<<<<< HEAD
      * 通过uID查询单条数据
-=======
-     * 通过uID查询数据
->>>>>>> 66face6ab7d2b3a3f760b2d7f44c03d438dd0d54
      *
      * @param uId 主键
      * @return 实例对象
@@ -41,23 +37,6 @@ public interface ShoppingcartDao {
      * @return 实例对象
      */
     List<Shoppingcart> queryByScIdArr(Integer[] scIdArr);
-
-    /**
-     * 查询指定行数据
-     *
-     * @param shoppingcart 查询条件
-     * @param pageable     分页对象
-     * @return 对象列表
-     */
-    List<Shoppingcart> queryAllByLimit(Shoppingcart shoppingcart, @Param("pageable") Pageable pageable);
-
-    /**
-     * 统计总行数
-     *
-     * @param shoppingcart 查询条件
-     * @return 总行数
-     */
-    long count(Shoppingcart shoppingcart);
 
     /**
      * 新增数据

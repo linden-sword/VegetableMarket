@@ -23,23 +23,6 @@ public interface SalesDao {
     Sales queryById(Integer sId);
 
     /**
-     * 查询指定行数据
-     *
-     * @param sales    查询条件
-     * @param pageable 分页对象
-     * @return 对象列表
-     */
-    List<Sales> queryAllByLimit(Sales sales, @Param("pageable") Pageable pageable);
-
-    /**
-     * 统计总行数
-     *
-     * @param sales 查询条件
-     * @return 总行数
-     */
-    long count(Sales sales);
-
-    /**
      * 新增数据
      *
      * @param sales 实例对象

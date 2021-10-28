@@ -15,15 +15,15 @@ import java.util.List;
 public interface ClassificationDao {
 
 
-    List<Classification> queryAll();
+
     Classification   queryByName(String cName);
     /**
-     * 统计总行数
+     * 通过ID查询单条数据
      *
-     * @param classification 查询条件
-     * @return 总行数
+     * @param cId 主键
+     * @return 实例对象
      */
-    long count(Classification classification);
+    Classification queryById(Integer cId);
 
     /**
      * 新增数据
@@ -32,23 +32,6 @@ public interface ClassificationDao {
      * @return 影响行数
      */
     int insert(Classification classification);
-
-    /**
-     * 批量新增数据（MyBatis原生foreach方法）
-     *
-     * @param entities List<Classification> 实例对象列表
-     * @return 影响行数
-     */
-    int insertBatch(@Param("entities") List<Classification> entities);
-
-    /**
-     * 批量新增或按主键更新数据（MyBatis原生foreach方法）
-     *
-     * @param entities List<Classification> 实例对象列表
-     * @return 影响行数
-     * @throws org.springframework.jdbc.BadSqlGrammarException 入参是空List的时候会抛SQL语句错误的异常，请自行校验入参
-     */
-    int insertOrUpdateBatch(@Param("entities") List<Classification> entities);
 
     /**
      * 修改数据
@@ -65,6 +48,12 @@ public interface ClassificationDao {
      * @return 影响行数
      */
     int deleteById(Integer cId);
+
+    /**
+     * 通过商品分类查询多条数据
+     * @return 实例对象
+     */
+    List<Classification> queryAll();
 
 }
 

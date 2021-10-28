@@ -33,19 +33,6 @@ public class SalesServiceImpl implements SalesService {
     }
 
     /**
-     * 分页查询
-     *
-     * @param sales       筛选条件
-     * @param pageRequest 分页对象
-     * @return 查询结果
-     */
-    @Override
-    public Page<Sales> queryByPage(Sales sales, PageRequest pageRequest) {
-        long total = this.salesDao.count(sales);
-        return new PageImpl<>(this.salesDao.queryAllByLimit(sales, pageRequest), pageRequest, total);
-    }
-
-    /**
      * 新增数据
      *
      * @param sales 实例对象

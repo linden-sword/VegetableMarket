@@ -1,14 +1,10 @@
 package com.zs.controller;
 
 import com.github.pagehelper.PageInfo;
-import com.sun.org.glassfish.external.probe.provider.annotations.ProbeParam;
 import com.zs.entity.Token;
 import com.zs.entity.Users;
 import com.zs.service.TokenService;
 import com.zs.service.UsersService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -72,6 +68,25 @@ public class UsersController {
             return new com.zs.util.ResponseEntity<>(1002, "Error:用户不存在", null);
         }
         return new com.zs.util.ResponseEntity<>(1004, "Error:Service:未知错误", null);
+
+    }
+
+    /**
+     * 注册
+     */
+    @PostMapping("/VegetableMarket/reg")
+//    @CrossOrigin(origins="http://127.0.0.1:5501",allowCredentials="true")
+    public com.zs.util.ResponseEntity<String> reg(Users users, HttpServletRequest request, HttpServletResponse response){
+        System.out.println("====== 注册信息 ：" + users.getUsername() + " ," + users.getPasswd() + " , " + users.getUEmail() + " ======");
+        users.setUDatetime(new Date());
+        users.setURole("1");
+        users.setUStatus("1");
+        int flag = usersService.reg(users);
+
+        if (flag==1){
+            return new com.zs.util.ResponseEntity<>(1000, "Success", "注册成功");
+        }
+        return new com.zs.util.ResponseEntity<>(1002, "Error", "注册失败");
 
     }
 

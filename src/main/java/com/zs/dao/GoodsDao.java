@@ -16,6 +16,7 @@ public interface GoodsDao {
 
     /**
      * 查询所有
+     *
      * @return
      */
     List<Goods> queAllGoods();
@@ -51,8 +52,6 @@ public interface GoodsDao {
      * @return 实例对象
      */
     List<Goods> queryByGNameLike(Goods goods);
-
-
 
 
     /**

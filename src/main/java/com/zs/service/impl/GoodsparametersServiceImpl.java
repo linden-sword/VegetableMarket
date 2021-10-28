@@ -38,19 +38,6 @@ public class GoodsparametersServiceImpl implements GoodsparametersService {
     }
 
     /**
-     * 分页查询
-     *
-     * @param goodsparameters 筛选条件
-     * @param pageRequest     分页对象
-     * @return 查询结果
-     */
-    @Override
-    public Page<Goodsparameters> queryByPage(Goodsparameters goodsparameters, PageRequest pageRequest) {
-        long total = this.goodsparametersDao.count(goodsparameters);
-        return new PageImpl<>(this.goodsparametersDao.queryAllByLimit(goodsparameters, pageRequest), pageRequest, total);
-    }
-
-    /**
      * 新增数据
      *
      * @param goodsparameters 实例对象

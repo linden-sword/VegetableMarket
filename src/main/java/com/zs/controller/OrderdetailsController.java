@@ -3,8 +3,6 @@ package com.zs.controller;
 import com.github.pagehelper.PageInfo;
 import com.zs.entity.Orderdetails;
 import com.zs.service.OrderdetailsService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

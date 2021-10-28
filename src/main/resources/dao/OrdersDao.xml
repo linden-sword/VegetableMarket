@@ -57,15 +57,6 @@
         from orders
     </select>
 
-    <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="OrdersMap">
-        select
-        o_id, u_id, o_time, o_status, o_total_price, o_remark, ad_id, o_pay_type, o_freight_price, o_idEnd,
-        o_pay_status, es_1, es_2, es_3
-        from orders
-    </select>
-
-
     <select id="queryAllordersPageByUid" resultMap="OrdersMap">
         select   o_id, u_id, o_time, o_status, o_total_price, o_remark, ad_id, o_pay_type, o_freight_price, o_idEnd,
         o_pay_status, es_1, es_2, es_3

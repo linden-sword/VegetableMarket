@@ -31,23 +31,6 @@ public interface TokenDao {
     Token queryByUUId(String toUuid);
 
     /**
-     * 查询指定行数据
-     *
-     * @param token    查询条件
-     * @param pageable 分页对象
-     * @return 对象列表
-     */
-    List<Token> queryAllByLimit(Token token, @Param("pageable") Pageable pageable);
-
-    /**
-     * 统计总行数
-     *
-     * @param token 查询条件
-     * @return 总行数
-     */
-    long count(Token token);
-
-    /**
      * 新增数据
      *
      * @param token 实例对象

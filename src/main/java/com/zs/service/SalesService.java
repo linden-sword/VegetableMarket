@@ -21,15 +21,6 @@ public interface SalesService {
     Sales queryById(Integer sId);
 
     /**
-     * 分页查询
-     *
-     * @param sales       筛选条件
-     * @param pageRequest 分页对象
-     * @return 查询结果
-     */
-    Page<Sales> queryByPage(Sales sales, PageRequest pageRequest);
-
-    /**
      * 新增数据
      *
      * @param sales 实例对象

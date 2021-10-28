@@ -21,15 +21,6 @@ public interface AssessesService {
     Assesses queryById(Integer asId);
 
     /**
-     * 分页查询
-     *
-     * @param assesses    筛选条件
-     * @param pageRequest 分页对象
-     * @return 查询结果
-     */
-    Page<Assesses> queryByPage(Assesses assesses, PageRequest pageRequest);
-
-    /**
      * 新增数据
      *
      * @param assesses 实例对象

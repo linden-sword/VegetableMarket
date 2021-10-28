@@ -23,23 +23,6 @@ public interface GoodsphotoDao {
     Goodsphoto queryById(Integer gpId);
 
     /**
-     * 查询指定行数据
-     *
-     * @param goodsphoto 查询条件
-     * @param pageable   分页对象
-     * @return 对象列表
-     */
-    List<Goodsphoto> queryAllByLimit(Goodsphoto goodsphoto, @Param("pageable") Pageable pageable);
-
-    /**
-     * 统计总行数
-     *
-     * @param goodsphoto 查询条件
-     * @return 总行数
-     */
-    long count(Goodsphoto goodsphoto);
-
-    /**
      * 新增数据
      *
      * @param goodsphoto 实例对象

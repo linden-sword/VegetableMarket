@@ -22,22 +22,6 @@ public interface OrderdetailsDao {
      */
     Orderdetails queryById(Integer odId);
     List<Orderdetails>  queryByOId(String oId);
-    /**
-     * 查询指定行数据
-     *
-     * @param orderdetails 查询条件
-     * @param pageable     分页对象
-     * @return 对象列表
-     */
-    List<Orderdetails> queryAllByLimit(Orderdetails orderdetails, @Param("pageable") Pageable pageable);
-
-    /**
-     * 统计总行数
-     *
-     * @param orderdetails 查询条件
-     * @return 总行数
-     */
-    long count(Orderdetails orderdetails);
 
     /**
      * 新增数据

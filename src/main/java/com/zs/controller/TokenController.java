@@ -25,18 +25,6 @@ public class TokenController {
     private TokenService tokenService;
 
     /**
-     * 分页查询
-     *
-     * @param token       筛选条件
-     * @param pageRequest 分页对象
-     * @return 查询结果
-     */
-    @GetMapping
-    public ResponseEntity<Page<Token>> queryByPage(Token token, PageRequest pageRequest) {
-        return ResponseEntity.ok(this.tokenService.queryByPage(token, pageRequest));
-    }
-
-    /**
      * 通过主键查询单条数据
      *
      * @param id 主键

@@ -23,23 +23,6 @@ public interface AssessesDao {
     Assesses queryById(Integer asId);
 
     /**
-     * 查询指定行数据
-     *
-     * @param assesses 查询条件
-     * @param pageable 分页对象
-     * @return 对象列表
-     */
-    List<Assesses> queryAllByLimit(Assesses assesses, @Param("pageable") Pageable pageable);
-
-    /**
-     * 统计总行数
-     *
-     * @param assesses 查询条件
-     * @return 总行数
-     */
-    long count(Assesses assesses);
-
-    /**
      * 新增数据
      *
      * @param assesses 实例对象

@@ -107,16 +107,6 @@ public class GoodsController {
         return new com.zs.util.ResponseEntity<>(1000,"Success",pageInfo);
     }
 
-//    /**
-//     * 通过主键查询单条数据
-//     *
-//     * @param id 主键
-//     * @return 单条数据
-//     */
-//    @GetMapping("/VegetableMarket/goods/id/{id}")
-//    public ResponseEntity<Goods> queryById(@PathVariable("id") Integer id) {
-//        return new com.zs.util.ResponseEntity<>(1000,"Success",goodsService.queryById(id));
-//    }
     /**
      * 通过主键查询单条数据
      *
@@ -139,7 +129,6 @@ public class GoodsController {
      * @param goods 实体
      * @return 新增结果
      */
-
     @GetMapping("/VegetableMarket/AddGoods")
     public com.zs.util.ResponseEntity<Goods> add(Goods goods) {
         Date date = new Date();
@@ -153,11 +142,6 @@ public class GoodsController {
 
 
     }
-
-//    @PostMapping
-//    public ResponseEntity<Goods> add(Goods goods) {
-//        return ResponseEntity.ok(this.goodsService.insert(goods));
-//    }
 
     /**
      * 编辑数据

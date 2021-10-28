@@ -1,7 +1,6 @@
 package com.zs.service.impl;
 
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.zs.dao.OrderdetailsDao;
 import com.zs.entity.Orderdetails;
 import com.zs.service.OrderdetailsService;
@@ -38,19 +37,6 @@ public class OrderdetailsServiceImpl implements OrderdetailsService {
     @Override
     public List<Orderdetails> queryByOId(String oId) {
         return orderdetailsDao.queryByOId(oId);
-    }
-
-    /**
-     * 分页查询
-     *
-     * @param orderdetails 筛选条件
-     * @param pageRequest  分页对象
-     * @return 查询结果
-     */
-    @Override
-    public Page<Orderdetails> queryByPage(Orderdetails orderdetails, PageRequest pageRequest) {
-        long total = this.orderdetailsDao.count(orderdetails);
-        return new PageImpl<>(this.orderdetailsDao.queryAllByLimit(orderdetails, pageRequest), pageRequest, total);
     }
 
     @Override

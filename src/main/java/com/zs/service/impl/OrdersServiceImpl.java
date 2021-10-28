@@ -6,31 +6,17 @@ import com.zs.dao.OrdersDao;
 import com.zs.entity.Goods;
 import com.zs.entity.Orders;
 import com.zs.service.OrdersService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
-import com.zs.entity.Orders;
-import com.zs.dao.OrdersDao;
-import com.zs.entity.Users;
 import com.zs.dao.GoodsDao;
 import com.zs.dao.OrderdetailsDao;
 import com.zs.dao.ShoppingcartDao;
-import com.zs.entity.Goods;
 import com.zs.entity.Orderdetails;
-import com.zs.entity.Orders;
-import com.zs.dao.OrdersDao;
 import com.zs.entity.Shoppingcart;
-import com.zs.service.OrdersService;
-import org.springframework.aop.target.LazyInitTargetSource;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -60,10 +46,6 @@ public class OrdersServiceImpl implements OrdersService {
     public Orders queryById(String oId) {
         return this.ordersDao.queryById(oId);
     }
-
-
-
-
 
     /**
      * 添加订单(事务)__直接购买

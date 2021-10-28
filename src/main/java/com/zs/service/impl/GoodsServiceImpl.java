@@ -30,7 +30,7 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     public PageInfo queAllGoods(int pageNum) {
         //pageNum和pageSize
-        PageHelper.startPage(pageNum, 4);//pageSize应为15
+        PageHelper.startPage(pageNum, 7);//pageSize应为15
         List<Goods> goodsList = goodsDao.queAllGoods();
         //创建pageInfo对象
         com.github.pagehelper.PageInfo pageInfo = new com.github.pagehelper.PageInfo(goodsList);
@@ -60,7 +60,7 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     public PageInfo queryByCId(Integer cId, int pageNum) {
         //pageNum和pageSize
-        PageHelper.startPage(pageNum, 4);//pageSize应为15
+        PageHelper.startPage(pageNum, 7);//pageSize应为15
         List<Goods> goodsList = goodsDao.queryByCId(cId);
         //创建pageInfo对象
         com.github.pagehelper.PageInfo pageInfo = new com.github.pagehelper.PageInfo(goodsList);
@@ -69,20 +69,17 @@ public class GoodsServiceImpl implements GoodsService {
         return pageInfo;
     }
 
-
-
-
     /**
      * 分页查询
      *
-     * @param goods       筛选条件
+     * @param cId  筛选条件
      * @param pageNum 分页对象
      * @return 查询结果
      */
     @Override
     public PageInfo queryByCIdPass(Integer cId, int pageNum) {
         //pageNum和pageSize
-        PageHelper.startPage(pageNum, 4);//pageSize应为15
+        PageHelper.startPage(pageNum, 7);//pageSize应为15
         List<Goods> goodsList = goodsDao.queryByCIdPass(cId);
         //创建pageInfo对象
         com.github.pagehelper.PageInfo pageInfo = new com.github.pagehelper.PageInfo(goodsList);
@@ -94,7 +91,7 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     public PageInfo queryByGNameLike(Goods goods,int pageNum) {
         //pageNum和pageSize
-        PageHelper.startPage(pageNum, 4);//pageSize应为15
+        PageHelper.startPage(pageNum, 7);//pageSize应为15
         List<Goods> goodsList = goodsDao.queryByGNameLike(goods);
         //创建pageInfo对象
         com.github.pagehelper.PageInfo pageInfo = new com.github.pagehelper.PageInfo(goodsList);

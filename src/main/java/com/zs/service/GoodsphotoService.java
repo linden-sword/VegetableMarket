@@ -21,15 +21,6 @@ public interface GoodsphotoService {
     Goodsphoto queryById(Integer gpId);
 
     /**
-     * 分页查询
-     *
-     * @param goodsphoto  筛选条件
-     * @param pageRequest 分页对象
-     * @return 查询结果
-     */
-    Page<Goodsphoto> queryByPage(Goodsphoto goodsphoto, PageRequest pageRequest);
-
-    /**
      * 新增数据
      *
      * @param goodsphoto 实例对象

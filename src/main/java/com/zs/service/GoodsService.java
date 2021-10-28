@@ -1,10 +1,6 @@
 package com.zs.service;
 
 import com.zs.entity.Goods;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-
-import java.util.List;
 
 /**
  * (Goods)表服务接口

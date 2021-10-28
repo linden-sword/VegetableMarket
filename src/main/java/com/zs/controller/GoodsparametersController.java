@@ -25,18 +25,6 @@ public class GoodsparametersController {
     private GoodsparametersService goodsparametersService;
 
     /**
-     * 分页查询
-     *
-     * @param goodsparameters 筛选条件
-     * @param pageRequest     分页对象
-     * @return 查询结果
-     */
-    @GetMapping
-    public ResponseEntity<Page<Goodsparameters>> queryByPage(Goodsparameters goodsparameters, PageRequest pageRequest) {
-        return ResponseEntity.ok(this.goodsparametersService.queryByPage(goodsparameters, pageRequest));
-    }
-
-    /**
      * 通过主键查询单条数据
      *
      * @param id 主键

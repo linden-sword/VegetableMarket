@@ -33,19 +33,6 @@ public class AssessesServiceImpl implements AssessesService {
     }
 
     /**
-     * 分页查询
-     *
-     * @param assesses    筛选条件
-     * @param pageRequest 分页对象
-     * @return 查询结果
-     */
-    @Override
-    public Page<Assesses> queryByPage(Assesses assesses, PageRequest pageRequest) {
-        long total = this.assessesDao.count(assesses);
-        return new PageImpl<>(this.assessesDao.queryAllByLimit(assesses, pageRequest), pageRequest, total);
-    }
-
-    /**
      * 新增数据
      *
      * @param assesses 实例对象

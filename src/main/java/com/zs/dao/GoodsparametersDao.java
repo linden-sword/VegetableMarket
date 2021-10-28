@@ -25,23 +25,6 @@ public interface GoodsparametersDao {
     Goodsparameters queryByGId(Integer GId);
 
     /**
-     * 查询指定行数据
-     *
-     * @param goodsparameters 查询条件
-     * @param pageable        分页对象
-     * @return 对象列表
-     */
-    List<Goodsparameters> queryAllByLimit(Goodsparameters goodsparameters, @Param("pageable") Pageable pageable);
-
-    /**
-     * 统计总行数
-     *
-     * @param goodsparameters 查询条件
-     * @return 总行数
-     */
-    long count(Goodsparameters goodsparameters);
-
-    /**
      * 新增数据
      *
      * @param goodsparameters 实例对象

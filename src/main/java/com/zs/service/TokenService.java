@@ -29,15 +29,6 @@ public interface TokenService {
     Token queryByUUId(String toUuid);
 
     /**
-     * 分页查询
-     *
-     * @param token       筛选条件
-     * @param pageRequest 分页对象
-     * @return 查询结果
-     */
-    Page<Token> queryByPage(Token token, PageRequest pageRequest);
-
-    /**
      * 新增数据
      *
      * @param token 实例对象

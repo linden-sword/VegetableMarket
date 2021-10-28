@@ -25,18 +25,6 @@ public class AssessesController {
     private AssessesService assessesService;
 
     /**
-     * 分页查询
-     *
-     * @param assesses    筛选条件
-     * @param pageRequest 分页对象
-     * @return 查询结果
-     */
-    @GetMapping
-    public ResponseEntity<Page<Assesses>> queryByPage(Assesses assesses, PageRequest pageRequest) {
-        return ResponseEntity.ok(this.assessesService.queryByPage(assesses, pageRequest));
-    }
-
-    /**
      * 通过主键查询单条数据
      *
      * @param id 主键

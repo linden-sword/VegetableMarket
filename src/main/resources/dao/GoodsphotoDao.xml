@@ -25,69 +25,9 @@
         where gp_id = #{gpId}
     </select>
 
-    <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="GoodsphotoMap">
-        select
-        gp_id, gp_name, g_id, g_level, es_1, es_2, es_3
-        from goodsphoto
-        <where>
-            <if test="gpId != null">
-                and gp_id = #{gpId}
-            </if>
-            <if test="gpName != null and gpName != ''">
-                and gp_name = #{gpName}
-            </if>
-            <if test="gId != null">
-                and g_id = #{gId}
-            </if>
-            <if test="gLevel != null">
-                and g_level = #{gLevel}
-            </if>
-            <if test="es1 != null and es1 != ''">
-                and es_1 = #{es1}
-            </if>
-            <if test="es2 != null and es2 != ''">
-                and es_2 = #{es2}
-            </if>
-            <if test="es3 != null and es3 != ''">
-                and es_3 = #{es3}
-            </if>
-        </where>
-        limit #{pageable.offset}, #{pageable.pageSize}
-    </select>
-
-    <!--统计总行数-->
-    <select id="count" resultType="java.lang.Long">
-        select count(1)
-        from goodsphoto
-        <where>
-            <if test="gpId != null">
-                and gp_id = #{gpId}
-            </if>
-            <if test="gpName != null and gpName != ''">
-                and gp_name = #{gpName}
-            </if>
-            <if test="gId != null">
-                and g_id = #{gId}
-            </if>
-            <if test="gLevel != null">
-                and g_level = #{gLevel}
-            </if>
-            <if test="es1 != null and es1 != ''">
-                and es_1 = #{es1}
-            </if>
-            <if test="es2 != null and es2 != ''">
-                and es_2 = #{es2}
-            </if>
-            <if test="es3 != null and es3 != ''">
-                and es_3 = #{es3}
-            </if>
-        </where>
-    </select>
-
     <!--新增所有列-->
     <insert id="insert" keyProperty="gpId" useGeneratedKeys="true">
-        insert into goodsphoto(null ,gp_name, g_id, g_level, es_1, es_2, es_3)
+        insert into goodsphoto(gp_name, g_id, g_level, es_1, es_2, es_3)
         values (#{gpName}, #{gId}, #{gLevel}, #{es1}, #{es2}, #{es3})
     </insert>
 

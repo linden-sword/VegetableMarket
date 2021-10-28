@@ -2,9 +2,6 @@ package com.zs.service;
 
 import com.github.pagehelper.PageInfo;
 import com.zs.entity.Orders;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * (Orders)表服务接口
@@ -32,6 +29,7 @@ public interface OrdersService {
 
 
     PageInfo queryordersPage(int pageNum);
+
     PageInfo queryAllordersPageByUid(int uId,int pageNum);
 
 

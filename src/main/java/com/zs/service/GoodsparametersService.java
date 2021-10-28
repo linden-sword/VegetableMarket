@@ -23,15 +23,6 @@ public interface GoodsparametersService {
     Goodsparameters queryByGId(Integer Gid);
 
     /**
-     * 分页查询
-     *
-     * @param goodsparameters 筛选条件
-     * @param pageRequest     分页对象
-     * @return 查询结果
-     */
-    Page<Goodsparameters> queryByPage(Goodsparameters goodsparameters, PageRequest pageRequest);
-
-    /**
      * 新增数据
      *
      * @param goodsparameters 实例对象

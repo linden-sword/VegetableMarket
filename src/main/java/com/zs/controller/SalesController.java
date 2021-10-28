@@ -25,18 +25,6 @@ public class SalesController {
     private SalesService salesService;
 
     /**
-     * 分页查询
-     *
-     * @param sales       筛选条件
-     * @param pageRequest 分页对象
-     * @return 查询结果
-     */
-    @GetMapping
-    public ResponseEntity<Page<Sales>> queryByPage(Sales sales, PageRequest pageRequest) {
-        return ResponseEntity.ok(this.salesService.queryByPage(sales, pageRequest));
-    }
-
-    /**
      * 通过主键查询单条数据
      *
      * @param id 主键

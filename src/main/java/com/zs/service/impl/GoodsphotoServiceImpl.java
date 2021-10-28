@@ -33,19 +33,6 @@ public class GoodsphotoServiceImpl implements GoodsphotoService {
     }
 
     /**
-     * 分页查询
-     *
-     * @param goodsphoto  筛选条件
-     * @param pageRequest 分页对象
-     * @return 查询结果
-     */
-    @Override
-    public Page<Goodsphoto> queryByPage(Goodsphoto goodsphoto, PageRequest pageRequest) {
-        long total = this.goodsphotoDao.count(goodsphoto);
-        return new PageImpl<>(this.goodsphotoDao.queryAllByLimit(goodsphoto, pageRequest), pageRequest, total);
-    }
-
-    /**
      * 新增数据
      *
      * @param goodsphoto 实例对象

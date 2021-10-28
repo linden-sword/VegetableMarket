@@ -1,6 +1,5 @@
 package com.zs.service;
 
-import com.github.pagehelper.PageInfo;
 import com.zs.entity.Orderdetails;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,17 +21,11 @@ public interface OrderdetailsService {
      * @return 实例对象
      */
     Orderdetails queryById(Integer odId);
+
     List<Orderdetails> queryByOId(String oId);
-    /**
-     * 分页查询
-     *
-     * @param orderdetails 筛选条件
-     * @param pageRequest  分页对象
-     * @return 查询结果
-     */
-    Page<Orderdetails> queryByPage(Orderdetails orderdetails, PageRequest pageRequest);
 
     com.github.pagehelper.PageInfo queryByoid(String oid, Integer pageNum);
+
     /**
      * 新增数据
      *

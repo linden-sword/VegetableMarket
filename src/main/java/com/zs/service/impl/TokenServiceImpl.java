@@ -44,19 +44,6 @@ public class TokenServiceImpl implements TokenService {
     }
 
     /**
-     * 分页查询
-     *
-     * @param token       筛选条件
-     * @param pageRequest 分页对象
-     * @return 查询结果
-     */
-    @Override
-    public Page<Token> queryByPage(Token token, PageRequest pageRequest) {
-        long total = this.tokenDao.count(token);
-        return new PageImpl<>(this.tokenDao.queryAllByLimit(token, pageRequest), pageRequest, total);
-    }
-
-    /**
      * 新增数据
      *
      * @param token 实例对象

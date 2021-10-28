@@ -25,14 +25,6 @@ public interface ShoppingcartService {
 
 
     List<Shoppingcart> queryByUid(Integer uId);
-    /**
-     * 分页查询
-     *
-     * @param shoppingcart 筛选条件
-     * @param pageRequest  分页对象
-     * @return 查询结果
-     */
-    Page<Shoppingcart> queryByPage(Shoppingcart shoppingcart, PageRequest pageRequest);
 
     /**
      * 新增数据

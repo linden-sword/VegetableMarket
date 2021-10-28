@@ -1,13 +1,10 @@
 package com.zs.filter;
 
-import com.zs.dao.TokenDao;
 import com.zs.entity.Token;
 import com.zs.service.TokenService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import javax.annotation.Resource;
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;

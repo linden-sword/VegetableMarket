@@ -82,7 +82,6 @@ public class OrdersController {
      * @param orders 实体
      * @return 新增结果
      */
-
     @PostMapping("/VegetableMarket/orders")
     public com.zs.util.ResponseEntity<String> add(Orders orders, String gId, String odWeight, HttpServletRequest request) {
         System.out.println("====订单信息："+orders.getAdId()+","+orders.getOPayType()+","+gId+","+odWeight);
