@@ -22,6 +22,24 @@ public class GoodsServiceImpl implements GoodsService {
     private GoodsDao goodsDao;
 
     /**
+     * 查询所有__分页
+     *
+     * @param pageNum
+     * @return List<Goods>
+     */
+    @Override
+    public PageInfo queAllGoods(int pageNum) {
+        //pageNum和pageSize
+        PageHelper.startPage(pageNum, 4);//pageSize应为15
+        List<Goods> goodsList = goodsDao.queAllGoods();
+        //创建pageInfo对象
+        com.github.pagehelper.PageInfo pageInfo = new com.github.pagehelper.PageInfo(goodsList);
+        //返回pageInfo
+        System.out.println(pageInfo);
+        return pageInfo;
+    }
+
+    /**
      * 通过ID查询单条数据
      *
      * @param gId 主键
@@ -44,6 +62,18 @@ public class GoodsServiceImpl implements GoodsService {
         //pageNum和pageSize
         PageHelper.startPage(pageNum, 4);//pageSize应为15
         List<Goods> goodsList = goodsDao.queryByCId(cId);
+        //创建pageInfo对象
+        com.github.pagehelper.PageInfo pageInfo = new com.github.pagehelper.PageInfo(goodsList);
+        //返回pageInfo
+        System.out.println(pageInfo);
+        return pageInfo;
+    }
+
+    @Override
+    public PageInfo queryByCIdPass(Integer cId, int pageNum) {
+        //pageNum和pageSize
+        PageHelper.startPage(pageNum, 4);//pageSize应为15
+        List<Goods> goodsList = goodsDao.queryByCIdPass(cId);
         //创建pageInfo对象
         com.github.pagehelper.PageInfo pageInfo = new com.github.pagehelper.PageInfo(goodsList);
         //返回pageInfo

@@ -24,6 +24,21 @@ public class GoodsController {
     private GoodsService goodsService;
 
     /**
+     * 查询所有商品
+     *
+     * @return
+     */
+    @GetMapping("/VegetableMarket/goods/allGoods")
+    public com.zs.util.ResponseEntity<PageInfo> queryAllGoods(Integer pageNum){
+        System.out.println("=== pageNum:"+pageNum);
+        com.github.pagehelper.PageInfo pageInfo = goodsService.queAllGoods(pageNum);
+        if (pageInfo.getList().isEmpty()){
+            return new com.zs.util.ResponseEntity<>(1002,"Error",null);
+        }
+        return new com.zs.util.ResponseEntity<>(1000,"Success",pageInfo);
+    }
+
+    /**
      * 查询分类下的商品__分页
      *
      * @param cId
@@ -33,6 +48,22 @@ public class GoodsController {
     public com.zs.util.ResponseEntity<PageInfo> queryGoodsBycId(@PathVariable("cId") Integer cId, Integer pageNum){
         System.out.println("=== pageNum:"+pageNum);
         com.github.pagehelper.PageInfo pageInfo = goodsService.queryByCId(cId,pageNum);
+        if (pageInfo.getList().isEmpty()){
+            return new com.zs.util.ResponseEntity<>(1002,"Error",null);
+        }
+        return new com.zs.util.ResponseEntity<>(1000,"Success",pageInfo);
+    }
+
+    /**
+     * 查询分类下的商品__分页__已下架
+     *
+     * @param cId
+     * @return
+     */
+    @GetMapping("/VegetableMarket/goodsPassed/cId/{cId}")
+    public com.zs.util.ResponseEntity<PageInfo> queryGoodsBycIdPassed(@PathVariable("cId") Integer cId, Integer pageNum){
+        System.out.println("=== pageNum:"+pageNum);
+        com.github.pagehelper.PageInfo pageInfo = goodsService.queryByCIdPass(cId,pageNum);
         if (pageInfo.getList().isEmpty()){
             return new com.zs.util.ResponseEntity<>(1002,"Error",null);
         }

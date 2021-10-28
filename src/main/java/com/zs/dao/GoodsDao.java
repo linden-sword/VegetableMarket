@@ -15,6 +15,12 @@ import java.util.List;
 public interface GoodsDao {
 
     /**
+     * 查询所有
+     * @return
+     */
+    List<Goods> queAllGoods();
+
+    /**
      * 通过ID查询单条数据
      *
      * @param gId 主键
@@ -29,6 +35,14 @@ public interface GoodsDao {
      * @return 实例对象
      */
     List<Goods> queryByCId(Integer cId);
+
+    /**
+     * 通过商品分类查询多条数据__已下架
+     *
+     * @param cId 主键
+     * @return 实例对象
+     */
+    List<Goods> queryByCIdPass(Integer cId);
 
     /**
      * 通过商品名称、描述 模糊查询

@@ -13,6 +13,11 @@ import java.util.List;
  * @since 2021-10-22 21:38:07
  */
 public interface GoodsService {
+    /**
+     * 查询所有__分页
+     * @return
+     */
+    com.github.pagehelper.PageInfo queAllGoods(int pageNum);
 
     /**
      * 通过ID查询单条数据
@@ -30,6 +35,13 @@ public interface GoodsService {
      */
     com.github.pagehelper.PageInfo queryByCId(Integer cId,int pageNum);
 
+    /**
+     * 通过商品分类查询多条数据__已下架
+     *
+     * @param cId 主键
+     * @return 实例对象
+     */
+    com.github.pagehelper.PageInfo queryByCIdPass(Integer cId,int pageNum);
 
     /**
      * 通过商品名称、描述 模糊查询
