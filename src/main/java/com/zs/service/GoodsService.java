@@ -4,6 +4,8 @@ import com.zs.entity.Goods;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
+import java.util.List;
+
 /**
  * (Goods)表服务接口
  *
@@ -21,13 +23,22 @@ public interface GoodsService {
     Goods queryById(Integer gId);
 
     /**
-     * 分页查询
+     * 通过cID查询多条数据__分页
      *
-     * @param goods       筛选条件
-     * @param pageRequest 分页对象
-     * @return 查询结果
+     * @param cId 主键
+     * @return 实例对象
      */
-    Page<Goods> queryByPage(Goods goods, PageRequest pageRequest);
+    com.github.pagehelper.PageInfo queryByCId(Integer cId,int pageNum);
+
+
+    /**
+     * 通过商品名称、描述 模糊查询
+     *
+     * @param goods
+     * @return 实例对象
+     */
+    com.github.pagehelper.PageInfo queryByGNameLike(Goods goods,int pageNum);
+
 
     /**
      * 新增数据

@@ -40,11 +40,12 @@
     <!--通过主键修改数据-->
     <update id="update">
         update address
-       set
-                ad_name = #{adName},
-                ad_tel = #{adTel},
-                ad_address = #{adAddress},
-                ad_zipCode = #{adZipcode}
+
+        set
+            ad_name = #{adName},
+            ad_tel = #{adTel},
+            ad_address = #{adAddress},
+            ad_zipCode = #{adZipcode}
         where u_id = #{uId}
     </update>
 
@@ -56,4 +57,3 @@
     </delete>
 
 </mapper>
-

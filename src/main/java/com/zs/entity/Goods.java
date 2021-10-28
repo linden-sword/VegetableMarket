@@ -28,7 +28,7 @@ public class Goods implements Serializable {
 
     private String gName;
 
-    private Object gPrice;
+    private double gPrice;
 
     private Integer gIsdiscount;
 
@@ -38,8 +38,9 @@ public class Goods implements Serializable {
 
     private Integer gBuyPersonTime;
 
-    private Object gStock;
+    private double gStock;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", locale = "zh", timezone = "GMT+8")
+
     private Date gStorageTime;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", locale = "zh", timezone = "GMT+8")
     private Date gRemovalTime;
@@ -53,6 +54,126 @@ public class Goods implements Serializable {
     private String es3;
 
 
+
+    public Integer getGId() {
+        return gId;
+    }
+
+    public void setGId(Integer gId) {
+        this.gId = gId;
+    }
+
+    public Integer getCId() {
+        return cId;
+    }
+
+    public void setCId(Integer cId) {
+        this.cId = cId;
+    }
+
+    public String getGName() {
+        return gName;
+    }
+
+    public void setGName(String gName) {
+        this.gName = gName;
+    }
+
+    public double getGPrice() {
+        return gPrice;
+    }
+
+    public void setGPrice(double gPrice) {
+        this.gPrice = gPrice;
+    }
+
+    public Integer getGIsdiscount() {
+        return gIsdiscount;
+    }
+
+    public void setGIsdiscount(Integer gIsdiscount) {
+        this.gIsdiscount = gIsdiscount;
+    }
+
+    public String getGDescribe() {
+        return gDescribe;
+    }
+
+    public void setGDescribe(String gDescribe) {
+        this.gDescribe = gDescribe;
+    }
+
+    public Object getGSalesVolume() {
+        return gSalesVolume;
+    }
+
+    public void setGSalesVolume(Object gSalesVolume) {
+        this.gSalesVolume = gSalesVolume;
+    }
+
+    public Integer getGBuyPersonTime() {
+        return gBuyPersonTime;
+    }
+
+    public void setGBuyPersonTime(Integer gBuyPersonTime) {
+        this.gBuyPersonTime = gBuyPersonTime;
+    }
+
+    public double getGStock() {
+        return gStock;
+    }
+
+    public void setGStock(double gStock) {
+        this.gStock = gStock;
+    }
+
+    public Date getGStorageTime() {
+        return gStorageTime;
+    }
+
+    public void setGStorageTime(Date gStorageTime) {
+        this.gStorageTime = gStorageTime;
+    }
+
+    public Date getGRemovalTime() {
+        return gRemovalTime;
+    }
+
+    public void setGRemovalTime(Date gRemovalTime) {
+        this.gRemovalTime = gRemovalTime;
+    }
+
+    public Integer getGStatus() {
+        return gStatus;
+    }
+
+    public void setGStatus(Integer gStatus) {
+        this.gStatus = gStatus;
+    }
+
+    public String getEs1() {
+        return es1;
+    }
+
+    public void setEs1(String es1) {
+        this.es1 = es1;
+    }
+
+    public String getEs2() {
+        return es2;
+    }
+
+    public void setEs2(String es2) {
+        this.es2 = es2;
+    }
+
+    public String getEs3() {
+        return es3;
+    }
+
+    public void setEs3(String es3) {
+        this.es3 = es3;
+    }
 
 }
 

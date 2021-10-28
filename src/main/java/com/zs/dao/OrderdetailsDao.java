@@ -21,7 +21,7 @@ public interface OrderdetailsDao {
      * @return 实例对象
      */
     Orderdetails queryById(Integer odId);
-
+    List<Orderdetails>  queryByOId(String oId);
     /**
      * 查询指定行数据
      *

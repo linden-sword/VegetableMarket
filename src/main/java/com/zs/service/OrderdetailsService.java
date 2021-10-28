@@ -4,6 +4,8 @@ import com.zs.entity.Orderdetails;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
+import java.util.List;
+
 /**
  * (Orderdetails)表服务接口
  *
@@ -19,7 +21,7 @@ public interface OrderdetailsService {
      * @return 实例对象
      */
     Orderdetails queryById(Integer odId);
-
+    List<Orderdetails> queryByOId(String oId);
     /**
      * 分页查询
      *

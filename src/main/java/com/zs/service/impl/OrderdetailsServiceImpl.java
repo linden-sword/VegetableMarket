@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * (Orderdetails)表服务实现类
@@ -32,6 +33,10 @@ public class OrderdetailsServiceImpl implements OrderdetailsService {
         return this.orderdetailsDao.queryById(odId);
     }
 
+  @Override
+  public List<Orderdetails> queryByOId(String oId){
+       return orderdetailsDao.queryByOId(oId);
+    }
     /**
      * 分页查询
      *

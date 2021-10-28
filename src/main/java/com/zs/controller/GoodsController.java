@@ -1,18 +1,16 @@
 package com.zs.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.zs.entity.Goods;
 import com.zs.entity.Goodsparameters;
 import com.zs.entity.Goodsphoto;
 import com.zs.service.GoodsService;
-import com.zs.service.GoodsparametersService;
-import com.zs.service.GoodsphotoService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+
 import java.io.File;
 import java.io.IOException;
 import java.security.Timestamp;
@@ -20,6 +18,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
+
 
 /**
  * (Goods)表控制层
@@ -37,11 +36,72 @@ public class GoodsController {
 
 
     /**
+     * 查询分类下的商品__分页
+     *
+     * @param cId
+     * @return
+     */
+    @GetMapping("/VegetableMarket/goods/cId/{cId}")
+    public com.zs.util.ResponseEntity<PageInfo> queryGoodsBycId(@PathVariable("cId") Integer cId, Integer pageNum){
+        System.out.println("=== pageNum:"+pageNum);
+        com.github.pagehelper.PageInfo pageInfo = goodsService.queryByCId(cId,pageNum);
+        if (pageInfo.getList().isEmpty()){
+            return new com.zs.util.ResponseEntity<>(1002,"Error",null);
+        }
+        return new com.zs.util.ResponseEntity<>(1000,"Success",pageInfo);
+    }
+
+    /**
+     * 搜索商品__名称、描述，模糊查询
+     *
+     * @param searchString
+     * @return
+     */
+    @GetMapping("/VegetableMarket/goods")
+    public com.zs.util.ResponseEntity<PageInfo> queryByGNameLike(String searchString,Integer pageNum){
+        System.out.println("=== searchString:"+searchString);
+        Goods goods = new Goods();
+        goods.setGName(searchString);
+        com.github.pagehelper.PageInfo pageInfo = goodsService.queryByGNameLike(goods,pageNum);
+        if (pageInfo.getList().isEmpty()){
+            return new com.zs.util.ResponseEntity<>(1002,"Error",null);
+        }
+        return new com.zs.util.ResponseEntity<>(1000,"Success",pageInfo);
+    }
+
+//    /**
+//     * 通过主键查询单条数据
+//     *
+//     * @param id 主键
+//     * @return 单条数据
+//     */
+//    @GetMapping("/VegetableMarket/goods/id/{id}")
+//    public ResponseEntity<Goods> queryById(@PathVariable("id") Integer id) {
+//        return new com.zs.util.ResponseEntity<>(1000,"Success",goodsService.queryById(id));
+//    }
+    /**
+     * 通过主键查询单条数据
+     *
+     * @param gId 主键
+     * @return 单条数据
+     */
+    @GetMapping("/VegetableMarket/goods/gId/{gId}")
+    public com.zs.util.ResponseEntity<Goods> queryById(@PathVariable("gId") Integer gId) {
+        Goods goods = goodsService.queryById(gId);
+        System.out.println("goods:"+goods.toString());
+        if (goods == null) {
+            return new com.zs.util.ResponseEntity<>(1002, "Error", null);
+        }
+        return new com.zs.util.ResponseEntity<>(1000, "Success", goods);
+    }
+
+    /**
      * 新增数据
      *
      * @param goods 实体
      * @return 新增结果
      */
+
     @GetMapping("/VegetableMarket/AddGoods")
     public com.zs.util.ResponseEntity<Goods> add(Goods goods) {
         Date date = new Date();
@@ -55,6 +115,33 @@ public class GoodsController {
 
 
     }
+
+//    @PostMapping
+//    public ResponseEntity<Goods> add(Goods goods) {
+//        return ResponseEntity.ok(this.goodsService.insert(goods));
+//    }
+
+    /**
+     * 编辑数据
+     *
+     * @param goods 实体
+     * @return 编辑结果
+     */
+//    @PutMapping
+//    public ResponseEntity<Goods> edit(Goods goods) {
+//        return ResponseEntity.ok(this.goodsService.update(goods));
+//    }
+
+    /**
+     * 删除数据
+     *
+     * @param id 主键
+     * @return 删除是否成功
+     */
+//    @DeleteMapping
+//    public ResponseEntity<Boolean> deleteById(Integer id) {
+//        return ResponseEntity.ok(this.goodsService.deleteById(id));
+//    }
 
 }
 
