@@ -2,14 +2,13 @@ package com.zs.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.zs.entity.Goods;
-import com.zs.entity.Orderdetails;
 import com.zs.dao.OrderdetailsDao;
+import com.zs.entity.Orderdetails;
 import com.zs.service.OrderdetailsService;
-import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -36,6 +35,11 @@ public class OrderdetailsServiceImpl implements OrderdetailsService {
         return this.orderdetailsDao.queryById(odId);
     }
 
+    @Override
+    public List<Orderdetails> queryByOId(String oId) {
+        return orderdetailsDao.queryByOId(oId);
+    }
+
     /**
      * 分页查询
      *
@@ -50,10 +54,10 @@ public class OrderdetailsServiceImpl implements OrderdetailsService {
     }
 
     @Override
-    public PageInfo queryByoid(String oid, Integer pageNum) {
+    public com.github.pagehelper.PageInfo queryByoid(String oid, Integer pageNum) {
         //pageNum和pageSize
         PageHelper.startPage(pageNum, 100);
-        List<Orderdetails> list = orderdetailsDao.queryByoid(oid);
+        List<Orderdetails> list = orderdetailsDao.queryByOId(oid);
         //创建pageInfo对象
         com.github.pagehelper.PageInfo pageInfo = new com.github.pagehelper.PageInfo(list);
         //返回pageInfo

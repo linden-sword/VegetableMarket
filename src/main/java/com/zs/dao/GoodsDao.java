@@ -30,23 +30,16 @@ public interface GoodsDao {
      */
     List<Goods> queryByCId(Integer cId);
 
-
     /**
-     * 查询指定行数据
+     * 通过商品名称、描述 模糊查询
      *
-     * @param goods    查询条件
-     * @param pageable 分页对象
-     * @return 对象列表
+     * @param goods
+     * @return 实例对象
      */
-    List<Goods> queryAllByLimit(Goods goods, @Param("pageable") Pageable pageable);
+    List<Goods> queryByGNameLike(Goods goods);
 
-    /**
-     * 统计总行数
-     *
-     * @param goods 查询条件
-     * @return 总行数
-     */
-    long count(Goods goods);
+
+
 
     /**
      * 新增数据

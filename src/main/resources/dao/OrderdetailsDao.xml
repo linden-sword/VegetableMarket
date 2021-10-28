@@ -29,6 +29,18 @@
 
     <select id="queryByoid" resultMap="OrderdetailsMap">
         select od_id,
+        o_id,
+        g_id,
+        od_price,
+        od_weight,
+        es_1,
+        es_2,
+        es_3
+        from orderdetails
+        where o_id = #{oid}
+    </select>
+    <select id="queryByOId" resultMap="OrderdetailsMap">
+        select od_id,
                o_id,
                g_id,
                od_price,
@@ -37,9 +49,8 @@
                es_2,
                es_3
         from orderdetails
-        where o_id = #{oid}
+        where o_id = #{oId}
     </select>
-
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="OrderdetailsMap">
         select

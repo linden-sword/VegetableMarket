@@ -1,5 +1,10 @@
 package com.zs.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 import java.util.Date;
 import java.io.Serializable;
 
@@ -9,6 +14,11 @@ import java.io.Serializable;
  * @author makejava
  * @since 2021-10-22 21:38:11
  */
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class Shoppingcart implements Serializable {
     private static final long serialVersionUID = -59988131921368054L;
 
@@ -18,7 +28,7 @@ public class Shoppingcart implements Serializable {
 
     private Integer gId;
 
-    private Object scWeight;
+    private Double scWeight;
 
     private Date scAddtime;
 
@@ -27,6 +37,11 @@ public class Shoppingcart implements Serializable {
     private String es2;
 
     private String es3;
+
+
+    private double g_price;
+    private String g_name;
+
 
 
     public Integer getScId() {
@@ -53,11 +68,11 @@ public class Shoppingcart implements Serializable {
         this.gId = gId;
     }
 
-    public Object getScWeight() {
+    public Double getScWeight() {
         return scWeight;
     }
 
-    public void setScWeight(Object scWeight) {
+    public void setScWeight(Double scWeight) {
         this.scWeight = scWeight;
     }
 
@@ -93,5 +108,20 @@ public class Shoppingcart implements Serializable {
         this.es3 = es3;
     }
 
+    public double getG_price() {
+        return g_price;
+    }
+
+    public void setG_price(double g_price) {
+        this.g_price = g_price;
+    }
+
+    public String getG_name() {
+        return g_name;
+    }
+
+    public void setG_name(String g_name) {
+        this.g_name = g_name;
+    }
 }
 

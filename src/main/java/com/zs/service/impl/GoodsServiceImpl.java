@@ -6,9 +6,6 @@ import com.zs.entity.Goods;
 import com.zs.dao.GoodsDao;
 import com.zs.service.GoodsService;
 import org.springframework.stereotype.Service;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -45,7 +42,7 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     public PageInfo queryByCId(Integer cId, int pageNum) {
         //pageNum和pageSize
-        PageHelper.startPage(pageNum, 15);
+        PageHelper.startPage(pageNum, 4);//pageSize应为15
         List<Goods> goodsList = goodsDao.queryByCId(cId);
         //创建pageInfo对象
         com.github.pagehelper.PageInfo pageInfo = new com.github.pagehelper.PageInfo(goodsList);
@@ -56,17 +53,24 @@ public class GoodsServiceImpl implements GoodsService {
 
 
 
+
     /**
      * 分页查询
      *
      * @param goods       筛选条件
-     * @param pageRequest 分页对象
+     * @param pageNum 分页对象
      * @return 查询结果
      */
     @Override
-    public Page<Goods> queryByPage(Goods goods, PageRequest pageRequest) {
-        long total = this.goodsDao.count(goods);
-        return new PageImpl<>(this.goodsDao.queryAllByLimit(goods, pageRequest), pageRequest, total);
+    public PageInfo queryByGNameLike(Goods goods,int pageNum) {
+        //pageNum和pageSize
+        PageHelper.startPage(pageNum, 4);//pageSize应为15
+        List<Goods> goodsList = goodsDao.queryByGNameLike(goods);
+        //创建pageInfo对象
+        com.github.pagehelper.PageInfo pageInfo = new com.github.pagehelper.PageInfo(goodsList);
+        //返回pageInfo
+        System.out.println(pageInfo);
+        return pageInfo;
     }
 
     /**

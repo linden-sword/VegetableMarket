@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * (Orderdetails)表控制层
@@ -17,7 +18,6 @@ import javax.annotation.Resource;
  * @since 2021-10-22 21:38:09
  */
 @RestController
-@RequestMapping("/VegetableMarket/orderdetails")
 public class OrderdetailsController {
     /**
      * 服务对象
@@ -25,17 +25,6 @@ public class OrderdetailsController {
     @Resource
     private OrderdetailsService orderdetailsService;
 
-    /**
-     * 分页查询
-     *
-     * @param orderdetails 筛选条件
-     * @param pageRequest  分页对象
-     * @return 查询结果
-     */
-    @GetMapping
-    public ResponseEntity<Page<Orderdetails>> queryByPage(Orderdetails orderdetails, PageRequest pageRequest) {
-        return ResponseEntity.ok(this.orderdetailsService.queryByPage(orderdetails, pageRequest));
-    }
 
     /**
      * 查询分类下的商品
@@ -43,7 +32,7 @@ public class OrderdetailsController {
      * @param oid
      * @return
      */
-    @GetMapping("/oid/{oid}")
+    @GetMapping("/VegetableMarket/OrdersDetails/oid/{oid}")
     public com.zs.util.ResponseEntity<PageInfo> queryGoodsBycId(@PathVariable("oid") String oid, Integer pageNum) {
         System.out.println("=== pageNum:" + pageNum);
         com.github.pagehelper.PageInfo pageInfo = orderdetailsService.queryByoid(oid, pageNum);
@@ -59,9 +48,21 @@ public class OrderdetailsController {
      * @param id 主键
      * @return 单条数据
      */
-    @GetMapping("{id}")
+    @GetMapping("/VegetableMarket/OrdersDetails/{id}")
     public ResponseEntity<Orderdetails> queryById(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(this.orderdetailsService.queryById(id));
+    }
+
+
+    @GetMapping("/VegetableMarket/OrdersDetails")
+    public com.zs.util.ResponseEntity<List<Orderdetails>> queryByOId(String oId) {
+        List<Orderdetails> orderdetailsList = orderdetailsService.queryByOId(oId);
+        if (orderdetailsList.size() > 0) {
+            return new com.zs.util.ResponseEntity<>(1000,"Success",orderdetailsList);
+        }else {
+            return new com.zs.util.ResponseEntity<>(1000,"Success",null);
+        }
+
     }
 
     /**
@@ -70,7 +71,7 @@ public class OrderdetailsController {
      * @param orderdetails 实体
      * @return 新增结果
      */
-    @PostMapping
+    @PostMapping("/VegetableMarket/OrdersDetails")
     public ResponseEntity<Orderdetails> add(Orderdetails orderdetails) {
         return ResponseEntity.ok(this.orderdetailsService.insert(orderdetails));
     }
@@ -81,7 +82,7 @@ public class OrderdetailsController {
      * @param orderdetails 实体
      * @return 编辑结果
      */
-    @PutMapping
+    @PutMapping("/VegetableMarket/OrdersDetails")
     public ResponseEntity<Orderdetails> edit(Orderdetails orderdetails) {
         return ResponseEntity.ok(this.orderdetailsService.update(orderdetails));
     }
@@ -92,7 +93,7 @@ public class OrderdetailsController {
      * @param id 主键
      * @return 删除是否成功
      */
-    @DeleteMapping
+    @DeleteMapping("/VegetableMarket/OrdersDetails")
     public ResponseEntity<Boolean> deleteById(Integer id) {
         return ResponseEntity.ok(this.orderdetailsService.deleteById(id));
     }

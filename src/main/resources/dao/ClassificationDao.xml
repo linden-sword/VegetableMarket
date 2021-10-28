@@ -11,44 +11,18 @@
         <result property="es3" column="es_3" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <!--查询单个-->
-    <select id="queryById" resultMap="ClassificationMap">
-        select c_id,
-               c_name,
-               cf_id,
-               es_1,
-               es_2,
-               es_3
+
+<!--    查询所有-->
+    <select id="queryAll" resultMap="ClassificationMap">
+        select c_id,c_name
         from classification
-        where c_id = #{cId}
     </select>
 
-    <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="ClassificationMap">
-        select
-        c_id, c_name, cf_id, es_1, es_2, es_3
+
+    <select id="queryByName" resultMap="ClassificationMap">
+        select c_id,c_name
         from classification
-        <where>
-            <if test="cId != null">
-                and c_id = #{cId}
-            </if>
-            <if test="cName != null and cName != ''">
-                and c_name = #{cName}
-            </if>
-            <if test="cfId != null">
-                and cf_id = #{cfId}
-            </if>
-            <if test="es1 != null and es1 != ''">
-                and es_1 = #{es1}
-            </if>
-            <if test="es2 != null and es2 != ''">
-                and es_2 = #{es2}
-            </if>
-            <if test="es3 != null and es3 != ''">
-                and es_3 = #{es3}
-            </if>
-        </where>
-        limit #{pageable.offset}, #{pageable.pageSize}
+        where c_name=#{cName}
     </select>
 
     <!--统计总行数-->

@@ -17,9 +17,9 @@ public class Orderdetails implements Serializable {
 
     private Integer gId;
 
-    private Object odPrice;
+    private double odPrice;
 
-    private Object odWeight;
+    private double odWeight;
 
     private String es1;
 
@@ -52,19 +52,19 @@ public class Orderdetails implements Serializable {
         this.gId = gId;
     }
 
-    public Object getOdPrice() {
+    public double getOdPrice() {
         return odPrice;
     }
 
-    public void setOdPrice(Object odPrice) {
+    public void setOdPrice(double odPrice) {
         this.odPrice = odPrice;
     }
 
-    public Object getOdWeight() {
+    public double getOdWeight() {
         return odWeight;
     }
 
-    public void setOdWeight(Object odWeight) {
+    public void setOdWeight(double odWeight) {
         this.odWeight = odWeight;
     }
 

@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.zs.entity.Orders;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * (Orders)表服务接口
@@ -22,22 +23,25 @@ public interface OrdersService {
     Orders queryById(String oId);
 
     /**
-     * 分页查询
-     *
-     * @param orders      筛选条件
-     * @param pageRequest 分页对象
-     * @return 查询结果
-     */
-    Page<Orders> queryByPage(Orders orders, PageRequest pageRequest);
-
-
-    /**
-     * 新增数据
+     * 添加订单(事务)__直接购买
      *
      * @param orders 实例对象
      * @return 实例对象
      */
-    Orders insert(Orders orders);
+    int insert(Orders orders, String gId, String odWeight);
+
+
+    PageInfo queryordersPage(int pageNum);
+    PageInfo queryAllordersPageByUid(int uId,int pageNum);
+
+
+    /**
+     * 添加订单(事务)__购物车结算
+     *
+     * @param orders 实例对象
+     * @return 实例对象
+     */
+    int insertByCart(Orders orders,Integer[] scIdArr);
 
     /**
      * 修改数据
@@ -55,5 +59,4 @@ public interface OrdersService {
      */
     boolean deleteById(String oId);
 
-    PageInfo queryordersPage(int pageNum);
 }
