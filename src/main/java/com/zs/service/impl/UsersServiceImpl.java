@@ -1,12 +1,12 @@
 package com.zs.service.impl;
 
-import com.zs.entity.Users;
 import com.zs.dao.UsersDao;
+import com.zs.entity.Users;
 import com.zs.service.UsersService;
-import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
@@ -24,8 +24,8 @@ public class UsersServiceImpl implements UsersService {
     @Override
     public int login(String username, String passwd) {
         Users users = usersDao.queryByUsername(username);
-        if (users != null){
-            if (users.getPasswd().equals(passwd)){
+        if (users != null) {
+            if (users.getPasswd().equals(passwd)) {
                 return 1;
             }
             return 2;
@@ -84,6 +84,12 @@ public class UsersServiceImpl implements UsersService {
     public Users update(Users users) {
         this.usersDao.update(users);
         return this.queryById(users.getUId());
+    }
+
+    @Override
+    public Users updateByUserName(Users users) {
+        this.usersDao.updateByUserName(users);
+        return this.queryByUsername(users.getUsername());
     }
 
     /**

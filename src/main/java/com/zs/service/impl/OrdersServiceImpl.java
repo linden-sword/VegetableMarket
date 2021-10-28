@@ -1,14 +1,18 @@
 package com.zs.service.impl;
 
-import com.zs.entity.Orders;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.zs.dao.OrdersDao;
+import com.zs.entity.Goods;
+import com.zs.entity.Orders;
 import com.zs.service.OrdersService;
-import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * (Orders)表服务实现类
@@ -79,4 +83,13 @@ public class OrdersServiceImpl implements OrdersService {
     public boolean deleteById(String oId) {
         return this.ordersDao.deleteById(oId) > 0;
     }
+
+    @Override
+    public PageInfo queryordersPage(int pageNum) {
+        PageHelper.startPage(pageNum, 4);
+        List<Orders> ordersList = ordersDao.queryAllordersPage();
+        com.github.pagehelper.PageInfo pageInfo = new com.github.pagehelper.PageInfo(ordersList);
+        return pageInfo;
+    }
+
 }

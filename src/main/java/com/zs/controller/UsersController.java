@@ -103,6 +103,15 @@ public class UsersController {
 
     /**
      * 编辑数据
+     */
+    @PutMapping("/VegetableMarket/change")
+    public com.zs.util.ResponseEntity<String> editByUserName(Users users) {
+        this.usersService.updateByUserName(users);
+        return new com.zs.util.ResponseEntity<>(1000, "Success", "修改成功");
+    }
+
+    /**
+     * 编辑数据
      *
      * @param users 实体
      * @return 编辑结果

@@ -239,6 +239,48 @@
         where u_id = #{uId}
     </update>
 
+    <!--通过用户名修改数据-->
+    <update id="updateByUserName">
+        update users
+        <set>
+            <if test="passwd != null and passwd != ''">
+                passwd = #{passwd},
+            </if>
+            <if test="uEmail != null and uEmail != ''">
+                u_email = #{uEmail},
+            </if>
+            <if test="uTel != null and uTel != ''">
+                u_tel = #{uTel},
+            </if>
+            <if test="uSex != null and uSex != ''">
+                u_sex = #{uSex},
+            </if>
+            <if test="uDatetime != null">
+                u_datetime = #{uDatetime},
+            </if>
+            <if test="uPhoto != null and uPhoto != ''">
+                u_photo = #{uPhoto},
+            </if>
+            <if test="uRole != null and uRole != ''">
+                u_role = #{uRole},
+            </if>
+            <if test="uStatus != null and uStatus != ''">
+                u_status = #{uStatus},
+            </if>
+            <if test="es1 != null and es1 != ''">
+                es_1 = #{es1},
+            </if>
+            <if test="es2 != null and es2 != ''">
+                es_2 = #{es2},
+            </if>
+            <if test="es3 != null and es3 != ''">
+                es_3 = #{es3},
+            </if>
+        </set>
+        where username = #{username}
+    </update>
+
+
     <!--通过主键删除-->
     <delete id="deleteById">
         delete

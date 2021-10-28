@@ -16,7 +16,7 @@ import javax.annotation.Resource;
  * @since 2021-10-22 21:38:05
  */
 @RestController
-@RequestMapping("address")
+@RequestMapping("/VegetableMarket/address")
 public class AddressController {
     /**
      * 服务对象

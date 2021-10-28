@@ -81,6 +81,11 @@ public interface UsersDao {
     int update(Users users);
 
     /**
+     * 通过用户名修改数据
+     */
+    int updateByUserName(Users users);
+
+    /**
      * 通过主键删除数据
      *
      * @param uId 主键

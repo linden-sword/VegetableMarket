@@ -1,5 +1,8 @@
 package com.zs.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.zs.entity.Goods;
 import com.zs.entity.Orderdetails;
 import com.zs.dao.OrderdetailsDao;
 import com.zs.service.OrderdetailsService;
@@ -9,6 +12,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * (Orderdetails)表服务实现类
@@ -43,6 +47,18 @@ public class OrderdetailsServiceImpl implements OrderdetailsService {
     public Page<Orderdetails> queryByPage(Orderdetails orderdetails, PageRequest pageRequest) {
         long total = this.orderdetailsDao.count(orderdetails);
         return new PageImpl<>(this.orderdetailsDao.queryAllByLimit(orderdetails, pageRequest), pageRequest, total);
+    }
+
+    @Override
+    public PageInfo queryByoid(String oid, Integer pageNum) {
+        //pageNum和pageSize
+        PageHelper.startPage(pageNum, 100);
+        List<Orderdetails> list = orderdetailsDao.queryByoid(oid);
+        //创建pageInfo对象
+        com.github.pagehelper.PageInfo pageInfo = new com.github.pagehelper.PageInfo(list);
+        //返回pageInfo
+        System.out.println(pageInfo);
+        return pageInfo;
     }
 
     /**

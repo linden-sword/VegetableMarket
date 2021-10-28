@@ -32,6 +32,11 @@ public class GoodsparametersServiceImpl implements GoodsparametersService {
         return this.goodsparametersDao.queryById(pId);
     }
 
+    @Override
+    public Goodsparameters queryByGId(Integer Gid) {
+        return this.goodsparametersDao.queryByGId(Gid);
+    }
+
     /**
      * 分页查询
      *

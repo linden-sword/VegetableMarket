@@ -1,5 +1,6 @@
 package com.zs.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.zs.entity.Orders;
 import com.zs.service.OrdersService;
 import org.springframework.data.domain.Page;
@@ -16,7 +17,7 @@ import javax.annotation.Resource;
  * @since 2021-10-22 21:38:09
  */
 @RestController
-@RequestMapping("orders")
+@RequestMapping("/VegetableMarket/orders")
 public class OrdersController {
     /**
      * 服务对象
@@ -42,10 +43,22 @@ public class OrdersController {
      * @param id 主键
      * @return 单条数据
      */
-    @GetMapping("{id}")
-    public ResponseEntity<Orders> queryById(@PathVariable("id") String id) {
+    @GetMapping("{oid}")
+    public ResponseEntity<Orders> queryById(@PathVariable("oid") String id) {
         return ResponseEntity.ok(this.ordersService.queryById(id));
     }
+
+
+    @GetMapping("/orders")
+    public com.zs.util.ResponseEntity<PageInfo> queryOrdersPage(int pageNum) {
+        com.github.pagehelper.PageInfo pageInfo = ordersService.queryordersPage(pageNum);
+        System.out.println("====" + pageInfo);
+        if (pageInfo.getList().isEmpty()) {
+            return new com.zs.util.ResponseEntity<>(1002, "Error", null);
+        }
+        return new com.zs.util.ResponseEntity<>(1000, "Success", pageInfo);
+    }
+
 
     /**
      * 新增数据

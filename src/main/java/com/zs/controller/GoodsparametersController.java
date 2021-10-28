@@ -16,7 +16,7 @@ import javax.annotation.Resource;
  * @since 2021-10-22 21:38:07
  */
 @RestController
-@RequestMapping("goodsparameters")
+@RequestMapping("/VegetableMarket/goodsparameters")
 public class GoodsparametersController {
     /**
      * 服务对象
@@ -45,6 +45,18 @@ public class GoodsparametersController {
     @GetMapping("{id}")
     public ResponseEntity<Goodsparameters> queryById(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(this.goodsparametersService.queryById(id));
+    }
+
+    /**
+     * 通过GID查询单条数据
+     *
+     * @param id 主键
+     * @return 单条数据
+     */
+    @GetMapping("/gid/{gid}")
+    public com.zs.util.ResponseEntity<Goodsparameters> queryByGId(@PathVariable("gid") Integer id) {
+        Goodsparameters goodsparameters = goodsparametersService.queryByGId(id);
+        return new com.zs.util.ResponseEntity<>(1000, "查找完成", goodsparameters);
     }
 
     /**

@@ -20,6 +20,8 @@ public interface GoodsparametersService {
      */
     Goodsparameters queryById(Integer pId);
 
+    Goodsparameters queryByGId(Integer Gid);
+
     /**
      * 分页查询
      *
@@ -52,5 +54,4 @@ public interface GoodsparametersService {
      * @return 是否成功
      */
     boolean deleteById(Integer pId);
-
 }

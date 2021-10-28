@@ -1,7 +1,9 @@
 package com.zs.entity;
 
-import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * (Orders)实体类
@@ -16,6 +18,7 @@ public class Orders implements Serializable {
 
     private Integer uId;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", locale = "zh", timezone = "GMT+8")
     private Date oTime;
 
     private String oStatus;

@@ -1,5 +1,6 @@
 package com.zs.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.zs.entity.Orderdetails;
 import com.zs.service.OrderdetailsService;
 import org.springframework.data.domain.Page;
@@ -16,7 +17,7 @@ import javax.annotation.Resource;
  * @since 2021-10-22 21:38:09
  */
 @RestController
-@RequestMapping("orderdetails")
+@RequestMapping("/VegetableMarket/orderdetails")
 public class OrderdetailsController {
     /**
      * 服务对象
@@ -34,6 +35,22 @@ public class OrderdetailsController {
     @GetMapping
     public ResponseEntity<Page<Orderdetails>> queryByPage(Orderdetails orderdetails, PageRequest pageRequest) {
         return ResponseEntity.ok(this.orderdetailsService.queryByPage(orderdetails, pageRequest));
+    }
+
+    /**
+     * 查询分类下的商品
+     *
+     * @param oid
+     * @return
+     */
+    @GetMapping("/oid/{oid}")
+    public com.zs.util.ResponseEntity<PageInfo> queryGoodsBycId(@PathVariable("oid") String oid, Integer pageNum) {
+        System.out.println("=== pageNum:" + pageNum);
+        com.github.pagehelper.PageInfo pageInfo = orderdetailsService.queryByoid(oid, pageNum);
+        if (pageInfo.getList().isEmpty()) {
+            return new com.zs.util.ResponseEntity<>(1002, "Error", null);
+        }
+        return new com.zs.util.ResponseEntity<>(1000, "Success", pageInfo);
     }
 
     /**

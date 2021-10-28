@@ -18,7 +18,7 @@ public interface UsersService {
      * @param passwd
      * @return
      */
-    int login(String username,String passwd);
+    int login(String username, String passwd);
 
     /**
      * 通过ID查询单条数据
@@ -60,6 +60,11 @@ public interface UsersService {
      * @return 实例对象
      */
     Users update(Users users);
+
+    /**
+     * 通过用户名修改数据
+     */
+    Users updateByUserName(Users users);
 
     /**
      * 通过主键删除数据

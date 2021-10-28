@@ -80,5 +80,8 @@ public interface OrdersDao {
      */
     int deleteById(String oId);
 
+    List<Orders> queryAllordersPage();
+
+    List<Orders> queryByid(String id);
 }
 
