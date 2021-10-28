@@ -1,8 +1,11 @@
 package com.zs.service;
 
+import com.github.pagehelper.PageInfo;
 import com.zs.entity.Users;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+
+import java.util.List;
 
 /**
  * (Users)表服务接口
@@ -26,7 +29,7 @@ public interface UsersService {
      * @param uId 主键
      * @return 实例对象
      */
-    Users queryById(Integer uId);
+    Users queryById(int uId);
 
     /**
      * 通过username查询单条数据
@@ -36,6 +39,9 @@ public interface UsersService {
      */
     Users queryByUsername(String username);
 
+    List<Users> querycustomer(String uRole);
+    List<Users> queryAnyByUsername(String username);
+    PageInfo querycustomerPage(String uRole, int pageNum);
     /**
      * 分页查询
      *

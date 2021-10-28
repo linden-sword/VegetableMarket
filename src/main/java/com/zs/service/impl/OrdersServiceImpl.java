@@ -1,5 +1,21 @@
 package com.zs.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.zs.dao.OrdersDao;
+import com.zs.entity.Goods;
+import com.zs.entity.Orders;
+import com.zs.service.OrdersService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
+import com.zs.entity.Orders;
+import com.zs.dao.OrdersDao;
+import com.zs.entity.Users;
 import com.zs.dao.GoodsDao;
 import com.zs.dao.OrderdetailsDao;
 import com.zs.dao.ShoppingcartDao;
@@ -45,6 +61,10 @@ public class OrdersServiceImpl implements OrdersService {
         return this.ordersDao.queryById(oId);
     }
 
+
+
+
+
     /**
      * 添加订单(事务)__直接购买
      *
@@ -71,6 +91,21 @@ public class OrdersServiceImpl implements OrdersService {
         goods.setGStock(goods.getGStock()-Integer.parseInt(odWeight));
         goodsDao.update(goods);
         return 1;
+    }
+
+    @Override
+    public PageInfo queryordersPage(int pageNum) {
+        PageHelper.startPage(pageNum, 4);
+        List<Orders> ordersList =ordersDao.queryAllordersPage();
+        com.github.pagehelper.PageInfo pageInfo = new com.github.pagehelper.PageInfo(ordersList);
+        return pageInfo;
+    }
+    @Override
+    public PageInfo queryAllordersPageByUid(int uId,int pageNum) {
+        PageHelper.startPage(pageNum, 4);
+        List<Orders> ordersList =ordersDao.queryAllordersPageByUid(uId);
+        com.github.pagehelper.PageInfo pageInfo = new com.github.pagehelper.PageInfo(ordersList);
+        return pageInfo;
     }
 
     /**
@@ -133,4 +168,5 @@ public class OrdersServiceImpl implements OrdersService {
     public boolean deleteById(String oId) {
         return this.ordersDao.deleteById(oId) > 0;
     }
+
 }

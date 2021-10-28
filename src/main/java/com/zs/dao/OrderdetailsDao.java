@@ -21,7 +21,7 @@ public interface OrderdetailsDao {
      * @return 实例对象
      */
     Orderdetails queryById(Integer odId);
-
+    List<Orderdetails>  queryByOId(String oId);
     /**
      * 查询指定行数据
      *
@@ -79,6 +79,5 @@ public interface OrderdetailsDao {
      * @return 影响行数
      */
     int deleteById(Integer odId);
-
 }
 

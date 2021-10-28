@@ -37,6 +37,23 @@
         where u_id = #{uId}
     </select>
 
+    <select id="queryconsumer" resultMap="UsersMap">
+        select u_id,
+               username,
+               passwd,
+               u_email,
+               u_tel,
+               u_sex,
+               u_datetime,
+               u_photo,
+               u_role,
+               u_status,
+               es_1,
+               es_2,
+               es_3
+        from users
+        where u_role = #{uRole}
+    </select>
     <!--查询单个by Username-->
     <select id="queryByUsername" resultMap="UsersMap">
         select u_id,
@@ -55,7 +72,24 @@
         from users
         where username = #{username}
     </select>
-
+    <!--查询很多by Username-->
+    <select id="queryAnyByUsername" resultMap="UsersMap">
+        select u_id,
+               username,
+               passwd,
+               u_email,
+               u_tel,
+               u_sex,
+               u_datetime,
+               u_photo,
+               u_role,
+               u_status,
+               es_1,
+               es_2,
+               es_3
+        from users
+        where username like "%"#{username}"%"
+    </select>
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="UsersMap">
         select
@@ -154,9 +188,9 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="uId" useGeneratedKeys="true">
-        insert into users(username, passwd, u_email, u_tel, u_sex, u_datetime, u_photo, u_role, u_status, es_1, es_2,
+        insert into users(u_id, username, passwd, u_email, u_tel, u_sex, u_datetime, u_photo, u_role, u_status, es_1, es_2,
                           es_3)
-        values (#{username}, #{passwd}, #{uEmail}, #{uTel}, #{uSex}, #{uDatetime}, #{uPhoto}, #{uRole}, #{uStatus},
+        values (null ,#{username}, #{passwd}, #{uEmail}, #{uTel}, #{uSex}, #{uDatetime}, #{uPhoto}, #{uRole}, #{uStatus},
                 #{es1}, #{es2}, #{es3})
     </insert>
 
@@ -197,47 +231,63 @@
 
     <!--通过主键修改数据-->
     <update id="update">
-        update users
-        <set>
-            <if test="username != null and username != ''">
-                username = #{username},
-            </if>
-            <if test="passwd != null and passwd != ''">
-                passwd = #{passwd},
-            </if>
-            <if test="uEmail != null and uEmail != ''">
-                u_email = #{uEmail},
-            </if>
-            <if test="uTel != null and uTel != ''">
-                u_tel = #{uTel},
-            </if>
-            <if test="uSex != null and uSex != ''">
-                u_sex = #{uSex},
-            </if>
-            <if test="uDatetime != null">
-                u_datetime = #{uDatetime},
-            </if>
-            <if test="uPhoto != null and uPhoto != ''">
-                u_photo = #{uPhoto},
-            </if>
-            <if test="uRole != null and uRole != ''">
-                u_role = #{uRole},
-            </if>
-            <if test="uStatus != null and uStatus != ''">
-                u_status = #{uStatus},
-            </if>
-            <if test="es1 != null and es1 != ''">
-                es_1 = #{es1},
-            </if>
-            <if test="es2 != null and es2 != ''">
-                es_2 = #{es2},
-            </if>
-            <if test="es3 != null and es3 != ''">
-                es_3 = #{es3},
-            </if>
-        </set>
-        where u_id = #{uId}
+           update users
+           set username = #{username},
+           passwd = #{passwd},
+           u_email = #{uEmail},
+           u_tel = #{uTel},
+           u_sex = #{uSex},
+           u_datetime = #{uDatetime},
+           u_photo = #{uPhoto},
+           u_role = #{uRole},
+           u_status = #{uStatus},
+           es_1 = #{es1},
+           es_2 = #{es2},
+           es_3 = #{es3}
+           where u_id = #{uId}
     </update>
+    <!--    <update id="update">-->
+    <!--        update users-->
+    <!--        <set>-->
+    <!--            <if test="username != null and username != ''">-->
+    <!--                username = #{username},-->
+    <!--            </if>-->
+    <!--            <if test="passwd != null and passwd != ''">-->
+    <!--                passwd = #{passwd},-->
+    <!--            </if>-->
+    <!--            <if test="uEmail != null and uEmail != ''">-->
+    <!--                u_email = #{uEmail},-->
+    <!--            </if>-->
+    <!--            <if test="uTel != null and uTel != ''">-->
+    <!--                u_tel = #{uTel},-->
+    <!--            </if>-->
+    <!--            <if test="uSex != null and uSex != ''">-->
+    <!--                u_sex = #{uSex},-->
+    <!--            </if>-->
+    <!--            <if test="uDatetime != null">-->
+    <!--                u_datetime = #{uDatetime},-->
+    <!--            </if>-->
+    <!--            <if test="uPhoto != null and uPhoto != ''">-->
+    <!--                u_photo = #{uPhoto},-->
+    <!--            </if>-->
+    <!--            <if test="uRole != null and uRole != ''">-->
+    <!--                u_role = #{uRole},-->
+    <!--            </if>-->
+    <!--            <if test="uStatus != null and uStatus != ''">-->
+    <!--                u_status = #{uStatus},-->
+    <!--            </if>-->
+    <!--            <if test="es1 != null and es1 != ''">-->
+    <!--                es_1 = #{es1},-->
+    <!--            </if>-->
+    <!--            <if test="es2 != null and es2 != ''">-->
+    <!--                es_2 = #{es2},-->
+    <!--            </if>-->
+    <!--            <if test="es3 != null and es3 != ''">-->
+    <!--                es_3 = #{es3},-->
+    <!--            </if>-->
+    <!--        </set>-->
+    <!--        where u_id = #{uId}-->
+    <!--    </update>-->
 
     <!--通过用户名修改数据-->
     <update id="updateByUserName">
@@ -279,7 +329,6 @@
         </set>
         where username = #{username}
     </update>
-
 
     <!--通过主键删除-->
     <delete id="deleteById">

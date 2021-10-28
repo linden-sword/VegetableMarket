@@ -1,6 +1,8 @@
 package com.zs.dao;
 
+import com.sun.org.apache.xpath.internal.operations.Or;
 import com.zs.entity.Orders;
+import com.zs.entity.Users;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.data.domain.Pageable;
 
@@ -21,6 +23,11 @@ public interface OrdersDao {
      * @return 实例对象
      */
     Orders queryById(String oId);
+
+
+
+    List<Orders> queryAllordersPage();
+    List<Orders> queryAllordersPageByUid(int uId);
 
     /**
      * 新增数据
@@ -46,5 +53,6 @@ public interface OrdersDao {
      */
     int deleteById(String oId);
 
+    List<Orders> queryByid(String id);
 }
 

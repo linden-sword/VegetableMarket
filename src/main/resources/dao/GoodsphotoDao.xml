@@ -87,7 +87,7 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="gpId" useGeneratedKeys="true">
-        insert into goodsphoto(gp_name, g_id, g_level, es_1, es_2, es_3)
+        insert into goodsphoto(null ,gp_name, g_id, g_level, es_1, es_2, es_3)
         values (#{gpName}, #{gId}, #{gLevel}, #{es1}, #{es2}, #{es3})
     </insert>
 

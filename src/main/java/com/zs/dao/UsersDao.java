@@ -20,7 +20,7 @@ public interface UsersDao {
      * @param uId 主键
      * @return 实例对象
      */
-    Users queryById(Integer uId);
+    Users queryById(int uId);
 
     /**
      * 通过username查询单条数据
@@ -30,6 +30,11 @@ public interface UsersDao {
      */
     Users queryByUsername(String username);
 
+
+
+
+    List<Users> queryconsumer(String uRole);
+    List<Users> queryAnyByUsername(String username);
     /**
      * 查询指定行数据
      *

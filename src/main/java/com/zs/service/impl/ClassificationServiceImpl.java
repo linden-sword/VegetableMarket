@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * (Classification)表服务实现类
@@ -21,28 +22,15 @@ public class ClassificationServiceImpl implements ClassificationService {
     @Resource
     private ClassificationDao classificationDao;
 
-    /**
-     * 通过ID查询单条数据
-     *
-     * @param cId 主键
-     * @return 实例对象
-     */
+
     @Override
-    public Classification queryById(Integer cId) {
-        return this.classificationDao.queryById(cId);
+    public List<Classification> FindAll() {
+        return classificationDao.queryAll();
     }
 
-    /**
-     * 分页查询
-     *
-     * @param classification 筛选条件
-     * @param pageRequest    分页对象
-     * @return 查询结果
-     */
     @Override
-    public Page<Classification> queryByPage(Classification classification, PageRequest pageRequest) {
-        long total = this.classificationDao.count(classification);
-        return new PageImpl<>(this.classificationDao.queryAllByLimit(classification, pageRequest), pageRequest, total);
+    public Classification queryByName(String cName) {
+    return classificationDao.queryByName(cName);
     }
 
     /**
@@ -57,17 +45,6 @@ public class ClassificationServiceImpl implements ClassificationService {
         return classification;
     }
 
-    /**
-     * 修改数据
-     *
-     * @param classification 实例对象
-     * @return 实例对象
-     */
-    @Override
-    public Classification update(Classification classification) {
-        this.classificationDao.update(classification);
-        return this.queryById(classification.getCId());
-    }
 
     /**
      * 通过主键删除数据

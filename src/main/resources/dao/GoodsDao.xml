@@ -11,7 +11,7 @@
         <result property="gDescribe" column="g_describe" jdbcType="VARCHAR"/>
         <result property="gSalesVolume" column="g_sales_volume" jdbcType="VARCHAR"/>
         <result property="gBuyPersonTime" column="g_buy_person_time" jdbcType="INTEGER"/>
-        <result property="gStock" column="g_stock" jdbcType="VARCHAR"/>
+        <result property="gStock" column="g_stock" jdbcType="DOUBLE"/>
         <result property="gStorageTime" column="g_storage_time" jdbcType="TIMESTAMP"/>
         <result property="gRemovalTime" column="g_removal_time" jdbcType="TIMESTAMP"/>
         <result property="gStatus" column="g_status" jdbcType="INTEGER"/>
@@ -134,10 +134,8 @@
 
 
     <!--新增所有列-->
-    <insert id="insert" keyProperty="gId" useGeneratedKeys="true">
-        insert into goods(c_id, g_name, g_price, g_isdiscount, g_describe, g_sales_volume, g_buy_person_time, g_stock,
-                          g_storage_time, g_removal_time, g_status, es_1, es_2, es_3)
-        values (#{cId}, #{gName}, #{gPrice}, #{gIsdiscount}, #{gDescribe}, #{gSalesVolume}, #{gBuyPersonTime},
+    <insert id="insert">
+        insert into goods values (null ,#{cId}, #{gName}, #{gPrice}, #{gIsdiscount}, #{gDescribe}, #{gSalesVolume}, #{gBuyPersonTime},
                 #{gStock}, #{gStorageTime}, #{gRemovalTime}, #{gStatus}, #{es1}, #{es2}, #{es3})
     </insert>
 

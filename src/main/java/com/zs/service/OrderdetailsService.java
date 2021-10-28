@@ -1,8 +1,11 @@
 package com.zs.service;
 
+import com.github.pagehelper.PageInfo;
 import com.zs.entity.Orderdetails;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+
+import java.util.List;
 
 /**
  * (Orderdetails)表服务接口
@@ -19,7 +22,7 @@ public interface OrderdetailsService {
      * @return 实例对象
      */
     Orderdetails queryById(Integer odId);
-
+    List<Orderdetails> queryByOId(String oId);
     /**
      * 分页查询
      *
@@ -29,6 +32,7 @@ public interface OrderdetailsService {
      */
     Page<Orderdetails> queryByPage(Orderdetails orderdetails, PageRequest pageRequest);
 
+    com.github.pagehelper.PageInfo queryByoid(String oid, Integer pageNum);
     /**
      * 新增数据
      *
@@ -52,5 +56,4 @@ public interface OrderdetailsService {
      * @return 是否成功
      */
     boolean deleteById(Integer odId);
-
 }

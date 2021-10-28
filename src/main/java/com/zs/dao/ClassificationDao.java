@@ -14,23 +14,9 @@ import java.util.List;
  */
 public interface ClassificationDao {
 
-    /**
-     * 通过ID查询单条数据
-     *
-     * @param cId 主键
-     * @return 实例对象
-     */
-    Classification queryById(Integer cId);
 
-    /**
-     * 查询指定行数据
-     *
-     * @param classification 查询条件
-     * @param pageable       分页对象
-     * @return 对象列表
-     */
-    List<Classification> queryAllByLimit(Classification classification, @Param("pageable") Pageable pageable);
-
+    List<Classification> queryAll();
+    Classification   queryByName(String cName);
     /**
      * 统计总行数
      *

@@ -16,9 +16,9 @@ public interface AddressDao {
 
     /**
      * 通过ID查询单条数据
+
      */
     Address queryById(Integer uId);
-
 
 
     /**

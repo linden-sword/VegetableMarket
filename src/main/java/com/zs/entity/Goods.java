@@ -1,5 +1,11 @@
 package com.zs.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 import java.util.Date;
 import java.io.Serializable;
 
@@ -9,6 +15,10 @@ import java.io.Serializable;
  * @author makejava
  * @since 2021-10-22 21:38:07
  */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class Goods implements Serializable {
     private static final long serialVersionUID = 872715097453402087L;
 
@@ -29,9 +39,10 @@ public class Goods implements Serializable {
     private Integer gBuyPersonTime;
 
     private double gStock;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", locale = "zh", timezone = "GMT+8")
 
     private Date gStorageTime;
-
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", locale = "zh", timezone = "GMT+8")
     private Date gRemovalTime;
 
     private Integer gStatus;
@@ -41,6 +52,7 @@ public class Goods implements Serializable {
     private String es2;
 
     private String es3;
+
 
 
     public Integer getGId() {

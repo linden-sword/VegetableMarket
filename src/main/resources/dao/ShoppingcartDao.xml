@@ -26,6 +26,7 @@
         from shoppingcart
         where sc_id = #{scId}
     </select>
+
     <!--查询ByUid-->
     <select id="queryByUid" resultMap="ShoppingcartMap">
         select sc_id,
@@ -39,6 +40,7 @@
         from shoppingcart
         where u_id = #{uId}
     </select>
+
 
     <!--查询queryByScIdArr-->
     <select id="queryByScIdArr" resultMap="ShoppingcartMap">
@@ -185,6 +187,7 @@
     </update>
 
     <update id="updateAddWeight">
+
         update shoppingcart
         set sc_weight=sc_weight + 1
         where sc_id = #{scId}

@@ -1,11 +1,14 @@
 package com.zs.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.zs.entity.Goods;
 import com.zs.entity.Orders;
 import com.zs.entity.Token;
+import com.zs.entity.Users;
 import com.zs.service.GoodsService;
 import com.zs.service.OrdersService;
 import com.zs.service.TokenService;
+import com.zs.service.UsersService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +31,9 @@ public class OrdersController {
     @Resource
     private OrdersService ordersService;
     @Resource
+    private UsersService usersService;
+
+    @Resource
     private TokenService tokenService;
     @Resource
     private GoodsService goodsService;
@@ -38,10 +44,37 @@ public class OrdersController {
      * @param id 主键
      * @return 单条数据
      */
-    @GetMapping("/VegetableMarket/orders/id/{id}")
-    public ResponseEntity<Orders> queryById(@PathVariable("id") String id) {
+    @GetMapping("/VegetableMarket/OrdersPage/{oid}")
+    public ResponseEntity<Orders> queryById(@PathVariable("oid") String id) {
         return ResponseEntity.ok(this.ordersService.queryById(id));
     }
+
+
+    @GetMapping("/VegetableMarket/OrdersPage")
+    public com.zs.util.ResponseEntity<PageInfo> queryOrdersPage(int pageNum){
+        com.github.pagehelper.PageInfo pageInfo = ordersService.queryordersPage(pageNum);
+ //       System.out.println("===="+pageInfo);
+        if (pageInfo.getList().isEmpty()){
+            return new com.zs.util.ResponseEntity<>(1002,"Error",null);
+        }
+        return new com.zs.util.ResponseEntity<>(1000,"Success",pageInfo);
+    }
+
+    @GetMapping("/VegetableMarket/OrdersPageByUid")
+    public com.zs.util.ResponseEntity<PageInfo> queryOrdersPageUid(String username,int pageNum){
+        System.out.println("-=-========="+username);
+        Users users = usersService.queryByUsername(username);
+        System.out.println("-=-========="+users.toString());
+
+        com.github.pagehelper.PageInfo pageInfo = ordersService.queryAllordersPageByUid(users.getUId(),pageNum);
+        System.out.println("-=-========="+pageInfo);
+
+        if (pageInfo.getList().isEmpty()){
+            return new com.zs.util.ResponseEntity<>(1002,"Error",null);
+        }
+        return new com.zs.util.ResponseEntity<>(1000,"Success",pageInfo);
+    }
+
 
     /**
      * 直接购买__新增数据
@@ -49,6 +82,7 @@ public class OrdersController {
      * @param orders 实体
      * @return 新增结果
      */
+
     @PostMapping("/VegetableMarket/orders")
     public com.zs.util.ResponseEntity<String> add(Orders orders, String gId, String odWeight, HttpServletRequest request) {
         System.out.println("====订单信息："+orders.getAdId()+","+orders.getOPayType()+","+gId+","+odWeight);
@@ -98,6 +132,7 @@ public class OrdersController {
             return new com.zs.util.ResponseEntity<>(1000,"Success","订单提交成功");
         }
         return new com.zs.util.ResponseEntity<>(1002,"Error","订单提交失败");
+
     }
 
     /**
@@ -106,7 +141,7 @@ public class OrdersController {
      * @param orders 实体
      * @return 编辑结果
      */
-    @PutMapping("/VegetableMarket/orders")
+    @PutMapping("/VegetableMarket/orders/orders")
     public ResponseEntity<Orders> edit(Orders orders) {
         return ResponseEntity.ok(this.ordersService.update(orders));
     }
@@ -117,7 +152,7 @@ public class OrdersController {
      * @param id 主键
      * @return 删除是否成功
      */
-    @DeleteMapping("/VegetableMarket/orders")
+    @DeleteMapping("/VegetableMarket/orders/orders")
     public ResponseEntity<Boolean> deleteById(String id) {
         return ResponseEntity.ok(this.ordersService.deleteById(id));
     }

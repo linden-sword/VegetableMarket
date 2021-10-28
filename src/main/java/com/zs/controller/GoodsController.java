@@ -3,11 +3,29 @@ package com.zs.controller;
 import com.github.pagehelper.PageInfo;
 import com.zs.entity.Goods;
 import com.zs.service.GoodsService;
-import com.zs.util.ResponseEntity;
+import org.springframework.http.ResponseEntity;
+import org.springframework.orm.hibernate3.HibernateObjectRetrievalFailureException;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+import com.zs.entity.Goodsparameters;
+import com.zs.entity.Goodsphoto;
+import com.zs.service.GoodsService;
+
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import java.util.List;
+
+import java.io.File;
+import java.io.IOException;
+import java.security.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.UUID;
+
 
 /**
  * (Goods)表控制层
@@ -22,6 +40,7 @@ public class GoodsController {
      */
     @Resource
     private GoodsService goodsService;
+
 
     /**
      * 查询所有商品
@@ -45,13 +64,13 @@ public class GoodsController {
      * @return
      */
     @GetMapping("/VegetableMarket/goods/cId/{cId}")
-    public com.zs.util.ResponseEntity<PageInfo> queryGoodsBycId(@PathVariable("cId") Integer cId, Integer pageNum){
-        System.out.println("=== pageNum:"+pageNum);
-        com.github.pagehelper.PageInfo pageInfo = goodsService.queryByCId(cId,pageNum);
-        if (pageInfo.getList().isEmpty()){
-            return new com.zs.util.ResponseEntity<>(1002,"Error",null);
+    public com.zs.util.ResponseEntity<PageInfo> queryGoodsBycId(@PathVariable("cId") Integer cId, Integer pageNum) {
+        System.out.println("=== pageNum:" + pageNum);
+        com.github.pagehelper.PageInfo pageInfo = goodsService.queryByCId(cId, pageNum);
+        if (pageInfo.getList().isEmpty()) {
+            return new com.zs.util.ResponseEntity<>(1002, "Error", null);
         }
-        return new com.zs.util.ResponseEntity<>(1000,"Success",pageInfo);
+        return new com.zs.util.ResponseEntity<>(1000, "Success", pageInfo);
     }
 
     /**
@@ -107,6 +126,7 @@ public class GoodsController {
     @GetMapping("/VegetableMarket/goods/gId/{gId}")
     public com.zs.util.ResponseEntity<Goods> queryById(@PathVariable("gId") Integer gId) {
         Goods goods = goodsService.queryById(gId);
+        System.out.println("goods:"+goods.toString());
         if (goods == null) {
             return new com.zs.util.ResponseEntity<>(1002, "Error", null);
         }
@@ -119,6 +139,21 @@ public class GoodsController {
      * @param goods 实体
      * @return 新增结果
      */
+
+    @GetMapping("/VegetableMarket/AddGoods")
+    public com.zs.util.ResponseEntity<Goods> add(Goods goods) {
+        Date date = new Date();
+        goods.setGStorageTime(date);
+        Goods goods1 = goodsService.insert(goods);
+        if (goods1 == null) {
+            return new com.zs.util.ResponseEntity<>(1002, "Error:添加失败", null);
+        } else {
+            return new com.zs.util.ResponseEntity<>(1001, "Error:添加了商品", goods1);
+        }
+
+
+    }
+
 //    @PostMapping
 //    public ResponseEntity<Goods> add(Goods goods) {
 //        return ResponseEntity.ok(this.goodsService.insert(goods));
@@ -141,10 +176,8 @@ public class GoodsController {
      * @param id 主键
      * @return 删除是否成功
      */
-//    @DeleteMapping
-//    public ResponseEntity<Boolean> deleteById(Integer id) {
-//        return ResponseEntity.ok(this.goodsService.deleteById(id));
-//    }
-
+    @DeleteMapping("/VegetableMarket/goods/delete/{gId}")
+    public ResponseEntity<Boolean> deleteById(@PathVariable("gId") Integer id) {
+        return ResponseEntity.ok(this.goodsService.deleteById(id));
+    }
 }
-

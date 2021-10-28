@@ -1,5 +1,15 @@
 package com.zs.controller;
 
+
+import com.zs.entity.Address;
+import com.zs.entity.Goods;
+import com.zs.entity.Shoppingcart;
+import com.zs.entity.Users;
+import com.zs.service.GoodsService;
+import com.zs.service.ShoppingcartService;
+import com.zs.service.UsersService;
+import org.springframework.data.domain.Page;
+
 import com.zs.entity.Goods;
 import com.zs.entity.Shoppingcart;
 import com.zs.entity.Token;
@@ -12,6 +22,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,6 +46,19 @@ public class ShoppingcartController {
     private UsersService usersService;
     @Resource
     private GoodsService goodsService;
+
+
+//    /**
+//     * 通过主键查询单条数据
+//     *
+//     * @param id 主键
+//     * @return 单条数据
+//     */
+//    @GetMapping("{id}")
+//    public ResponseEntity<Shoppingcart> queryById(@PathVariable("id") Integer id) {
+//        return ResponseEntity.ok(this.shoppingcartService.queryById(id));
+//    }
+
     @Resource
     private TokenService tokenService;
 
@@ -80,7 +104,6 @@ public class ShoppingcartController {
         } else {
             return new com.zs.util.ResponseEntity<>(1000, "Success：查询到", shoppingcartList2);
         }
-
     }
 
     /**
@@ -90,6 +113,7 @@ public class ShoppingcartController {
      * @return 新增结果
      */
     @PostMapping("/VegetableMarket/Shoppingcart")
+
     public com.zs.util.ResponseEntity<String> add(Shoppingcart shoppingcart, HttpServletRequest request) {
         System.out.println("======购物车信息："+shoppingcart.getGId()+","+shoppingcart.getScWeight());
         //从token查uId
@@ -103,6 +127,7 @@ public class ShoppingcartController {
             return new com.zs.util.ResponseEntity<>(1000,"Success","添加购物车成功");
         }
         return new com.zs.util.ResponseEntity<>(1002,"Error","添加购物车失败");
+
     }
 
     /**
@@ -141,6 +166,7 @@ public class ShoppingcartController {
         }
     }
 
+
     @GetMapping("/VegetableMarket/ShoppingcartDown")
     public com.zs.util.ResponseEntity<Shoppingcart> UpdateDown(Integer scId) {
         Shoppingcart shoppingcart1 = shoppingcartService.queryById(scId);
@@ -148,6 +174,7 @@ public class ShoppingcartController {
         if (shoppingcart1.getScWeight() > 1) {
             shoppingcart = shoppingcartService.updatemul(shoppingcart1);
         } else if (shoppingcart1.getScWeight() <= 1 && shoppingcart1.getScWeight() > 0) {
+
             shoppingcart.setScWeight(0.0);
         }
         if (shoppingcart != null) {

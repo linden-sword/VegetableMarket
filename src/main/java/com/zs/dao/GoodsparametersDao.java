@@ -22,6 +22,8 @@ public interface GoodsparametersDao {
      */
     Goodsparameters queryById(Integer pId);
 
+    Goodsparameters queryByGId(Integer GId);
+
     /**
      * 查询指定行数据
      *

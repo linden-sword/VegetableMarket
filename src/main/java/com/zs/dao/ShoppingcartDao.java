@@ -22,12 +22,17 @@ public interface ShoppingcartDao {
      */
     Shoppingcart queryById(Integer scId);
     /**
+<<<<<<< HEAD
+     * 通过uID查询单条数据
+=======
      * 通过uID查询数据
+>>>>>>> 66face6ab7d2b3a3f760b2d7f44c03d438dd0d54
      *
      * @param uId 主键
      * @return 实例对象
      */
     List<Shoppingcart> queryByUid(Integer uId);
+
 
     /**
      * 通过scIdArr查询数据

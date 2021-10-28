@@ -69,6 +69,16 @@ public class GoodsServiceImpl implements GoodsService {
         return pageInfo;
     }
 
+
+
+
+    /**
+     * 分页查询
+     *
+     * @param goods       筛选条件
+     * @param pageNum 分页对象
+     * @return 查询结果
+     */
     @Override
     public PageInfo queryByCIdPass(Integer cId, int pageNum) {
         //pageNum和pageSize
