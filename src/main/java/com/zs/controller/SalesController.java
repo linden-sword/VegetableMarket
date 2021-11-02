@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * (Sales)表控制层
@@ -16,7 +17,7 @@ import javax.annotation.Resource;
  * @since 2021-10-22 21:38:10
  */
 @RestController
-@RequestMapping("sales")
+@RequestMapping("/VegetableMarket/sales")
 public class SalesController {
     /**
      * 服务对象
@@ -33,6 +34,12 @@ public class SalesController {
     @GetMapping("{id}")
     public ResponseEntity<Sales> queryById(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(this.salesService.queryById(id));
+    }
+
+    @GetMapping("all")
+    public com.zs.util.ResponseEntity<List<Sales>> queryAll(){
+        List<Sales> salesList = salesService.queryAllSales();
+        return new com.zs.util.ResponseEntity<>(1000,"salesList",salesList);
     }
 
     /**

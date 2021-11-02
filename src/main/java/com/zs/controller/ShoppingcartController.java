@@ -60,16 +60,16 @@ public class ShoppingcartController {
      */
     @GetMapping("/VegetableMarket/ShoppingcartFind/idArr/{idArr}")
     public com.zs.util.ResponseEntity<List<Shoppingcart>> queryById(@PathVariable("idArr") Integer[] idArr) {
-        System.out.println("====接收到："+ Arrays.toString(idArr));
+        System.out.println("====接收到：" + Arrays.toString(idArr));
         //循环查询每个在数组中的商品
         List<Shoppingcart> shoppingcartList = new ArrayList<>();
-        for (int i=0;i<idArr.length;i++){
+        for (int i = 0; i < idArr.length; i++) {
             Shoppingcart shoppingcart = shoppingcartService.queryById(idArr[i]);
-            shoppingcartList.add(i,shoppingcart);
+            shoppingcartList.add(i, shoppingcart);
         }
         System.out.println(shoppingcartList);
 
-        return new com.zs.util.ResponseEntity<>(1000,"Success",shoppingcartList);
+        return new com.zs.util.ResponseEntity<>(1000, "Success", shoppingcartList);
     }
 
     /**
@@ -97,6 +97,30 @@ public class ShoppingcartController {
     }
 
     /**
+     * SGP_ShopCartNum
+     */
+    @GetMapping("/VegetableMarket/ShoppingcartNumFind")
+    public com.zs.util.ResponseEntity<Integer> queryByUserNameNum(String username) {
+        //  System.out.println("==========username" + username);
+        Users users = usersService.queryByUsername(username);
+        List<Shoppingcart> shoppingcartList = shoppingcartService.queryByUid(users.getUId());
+        List<Shoppingcart> shoppingcartList2 = new ArrayList();
+
+        for (Shoppingcart shoppingcart : shoppingcartList) {
+            Goods goods = goodsService.queryById(shoppingcart.getGId());
+            shoppingcart.setG_price((double) goods.getGPrice());
+            shoppingcart.setG_name(goods.getGName());
+            System.out.println(shoppingcart.toString());
+            shoppingcartList2.add(shoppingcart);
+        }
+        if (shoppingcartList.size() == 0 || shoppingcartList == null) {
+            return new com.zs.util.ResponseEntity<>(1002, "Error：未查询到", 0);
+        } else {
+            return new com.zs.util.ResponseEntity<>(1000, "Success：查询到", shoppingcartList2.size());
+        }
+    }
+
+    /**
      * 新增数据
      *
      * @param shoppingcart 实体
@@ -105,18 +129,22 @@ public class ShoppingcartController {
     @PostMapping("/VegetableMarket/Shoppingcart")
 
     public com.zs.util.ResponseEntity<String> add(Shoppingcart shoppingcart, HttpServletRequest request) {
-        System.out.println("======购物车信息："+shoppingcart.getGId()+","+shoppingcart.getScWeight());
+        System.out.println("======购物车信息：" + shoppingcart.getGId() + "," + shoppingcart.getScWeight());
         //从token查uId
         String tokenString = (String) request.getAttribute("token");
         Token token = tokenService.queryByUUId(tokenString);
         shoppingcart.setUId(token.getUId());
         shoppingcart.setScAddtime(new Date());
 
+        //shopcart表备用字段es1___商品主图
+        String pic = goodsService.queryById(shoppingcart.getGId()).getEs1();
+        shoppingcart.setEs1(pic);
+
         int flag = shoppingcartService.insert(shoppingcart);
-        if (flag == 1){
-            return new com.zs.util.ResponseEntity<>(1000,"Success","添加购物车成功");
+        if (flag == 1) {
+            return new com.zs.util.ResponseEntity<>(1000, "Success", "添加购物车成功");
         }
-        return new com.zs.util.ResponseEntity<>(1002,"Error","添加购物车失败");
+        return new com.zs.util.ResponseEntity<>(1002, "Error", "添加购物车失败");
 
     }
 

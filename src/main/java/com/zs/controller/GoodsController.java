@@ -4,15 +4,6 @@ import com.github.pagehelper.PageInfo;
 import com.zs.entity.Goods;
 import com.zs.service.GoodsService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.orm.hibernate3.HibernateObjectRetrievalFailureException;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
-import com.zs.entity.Goodsparameters;
-import com.zs.entity.Goodsphoto;
-import com.zs.service.GoodsService;
-
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,12 +11,8 @@ import javax.annotation.Resource;
 
 import java.io.File;
 import java.io.IOException;
-import java.security.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
-
 
 /**
  * (Goods)表控制层
@@ -48,13 +35,13 @@ public class GoodsController {
      * @return
      */
     @GetMapping("/VegetableMarket/goods/allGoods")
-    public com.zs.util.ResponseEntity<PageInfo> queryAllGoods(Integer pageNum){
-        System.out.println("=== pageNum:"+pageNum);
+    public com.zs.util.ResponseEntity<PageInfo> queryAllGoods(Integer pageNum) {
+        System.out.println("=== pageNum:" + pageNum);
         com.github.pagehelper.PageInfo pageInfo = goodsService.queAllGoods(pageNum);
-        if (pageInfo.getList().isEmpty()){
-            return new com.zs.util.ResponseEntity<>(1002,"Error",null);
+        if (pageInfo.getList().isEmpty()) {
+            return new com.zs.util.ResponseEntity<>(1002, "Error", null);
         }
-        return new com.zs.util.ResponseEntity<>(1000,"Success",pageInfo);
+        return new com.zs.util.ResponseEntity<>(1000, "Success", pageInfo);
     }
 
     /**
@@ -80,13 +67,13 @@ public class GoodsController {
      * @return
      */
     @GetMapping("/VegetableMarket/goodsPassed/cId/{cId}")
-    public com.zs.util.ResponseEntity<PageInfo> queryGoodsBycIdPassed(@PathVariable("cId") Integer cId, Integer pageNum){
-        System.out.println("=== pageNum:"+pageNum);
-        com.github.pagehelper.PageInfo pageInfo = goodsService.queryByCIdPass(cId,pageNum);
-        if (pageInfo.getList().isEmpty()){
-            return new com.zs.util.ResponseEntity<>(1002,"Error",null);
+    public com.zs.util.ResponseEntity<PageInfo> queryGoodsBycIdPassed(@PathVariable("cId") Integer cId, Integer pageNum) {
+        System.out.println("=== pageNum:" + pageNum);
+        com.github.pagehelper.PageInfo pageInfo = goodsService.queryByCIdPass(cId, pageNum);
+        if (pageInfo.getList().isEmpty()) {
+            return new com.zs.util.ResponseEntity<>(1002, "Error", null);
         }
-        return new com.zs.util.ResponseEntity<>(1000,"Success",pageInfo);
+        return new com.zs.util.ResponseEntity<>(1000, "Success", pageInfo);
     }
 
     /**
@@ -96,15 +83,15 @@ public class GoodsController {
      * @return
      */
     @GetMapping("/VegetableMarket/goods")
-    public com.zs.util.ResponseEntity<PageInfo> queryByGNameLike(String searchString,Integer pageNum){
-        System.out.println("=== searchString:"+searchString);
+    public com.zs.util.ResponseEntity<PageInfo> queryByGNameLike(String searchString, Integer pageNum) {
+        System.out.println("=== searchString:" + searchString);
         Goods goods = new Goods();
         goods.setGName(searchString);
-        com.github.pagehelper.PageInfo pageInfo = goodsService.queryByGNameLike(goods,pageNum);
-        if (pageInfo.getList().isEmpty()){
-            return new com.zs.util.ResponseEntity<>(1002,"Error",null);
+        com.github.pagehelper.PageInfo pageInfo = goodsService.queryByGNameLike(goods, pageNum);
+        if (pageInfo.getList().isEmpty()) {
+            return new com.zs.util.ResponseEntity<>(1002, "Error", null);
         }
-        return new com.zs.util.ResponseEntity<>(1000,"Success",pageInfo);
+        return new com.zs.util.ResponseEntity<>(1000, "Success", pageInfo);
     }
 
     /**
@@ -116,7 +103,7 @@ public class GoodsController {
     @GetMapping("/VegetableMarket/goods/gId/{gId}")
     public com.zs.util.ResponseEntity<Goods> queryById(@PathVariable("gId") Integer gId) {
         Goods goods = goodsService.queryById(gId);
-        System.out.println("goods:"+goods.toString());
+        System.out.println("goods:" + goods.toString());
         if (goods == null) {
             return new com.zs.util.ResponseEntity<>(1002, "Error", null);
         }
@@ -144,15 +131,82 @@ public class GoodsController {
     }
 
     /**
-     * 编辑数据
+     * 编辑商品__主图上传
      *
      * @param goods 实体
      * @return 编辑结果
      */
-//    @PutMapping
-//    public ResponseEntity<Goods> edit(Goods goods) {
-//        return ResponseEntity.ok(this.goodsService.update(goods));
-//    }
+    @PostMapping("/VegetableMarket/goods")
+    public com.zs.util.ResponseEntity<String> edit(MultipartFile picture, Goods goods) throws IOException {
+        //原文件名
+        String originalFilename = picture.getOriginalFilename();
+        //生成UUID文件名
+        String newFileName = UUID.randomUUID() + originalFilename.substring(originalFilename.lastIndexOf("."));
+        //把文件名等属性保存到Photos对象里面
+        goods.setEs1(newFileName);
+        //把照片存到照片库中
+        File file = new File("E:/images/" + newFileName);
+        picture.transferTo(file);
+        //把对象存入数据库表
+        int flag = goodsService.update(goods);
+        if (flag == 1) {
+            return new com.zs.util.ResponseEntity<>(1000, "Success", "修改商品信息成功");
+        } else {
+            return new com.zs.util.ResponseEntity<>(1002, "Error", "修改商品信息失败");
+        }
+    }
+
+
+    /**
+     * 查询新品
+     */
+    @GetMapping("/VegetableMarket/goods/FreshTaste")
+    public com.zs.util.ResponseEntity<PageInfo> queryFreshTaste(Integer pageNum) {
+        com.github.pagehelper.PageInfo pageInfo = goodsService.queryAllPut(1);
+        if (pageInfo.getList().isEmpty()) {
+            return new com.zs.util.ResponseEntity<>(1002, "Error", null);
+        }
+        return new com.zs.util.ResponseEntity<>(1000, "Success", pageInfo);
+    }
+
+    @GetMapping("/VegetableMarket/goods/FreshTaste2")
+    public com.zs.util.ResponseEntity<PageInfo> queryFreshTaste2(Integer pageNum) {
+        com.github.pagehelper.PageInfo pageInfo = goodsService.queryAllPut2(1);
+        if (pageInfo.getList().isEmpty()) {
+            return new com.zs.util.ResponseEntity<>(1002, "Error", null);
+        }
+        return new com.zs.util.ResponseEntity<>(1000, "Success", pageInfo);
+    }
+
+    /**
+     * 查询旧品（特价促销）
+     */
+    @GetMapping("/VegetableMarket/goods/PromotionSale")
+    public com.zs.util.ResponseEntity<PageInfo> queryPromotionSale(Integer pageNum) {
+        com.github.pagehelper.PageInfo pageInfo = goodsService.queryAllPutASC(1);
+        if (pageInfo.getList().isEmpty()) {
+            return new com.zs.util.ResponseEntity<>(1002, "Error", null);
+        }
+        return new com.zs.util.ResponseEntity<>(1000, "Success", pageInfo);
+    }
+
+
+    /**
+     * 编辑商品__只含信息
+     *
+     * @param goods 实体
+     * @return 编辑结果
+     */
+    @PutMapping("/VegetableMarket/goods")
+    public com.zs.util.ResponseEntity<String> edit1(Goods goods) {
+        //把对象存入数据库表
+        int flag = goodsService.update(goods);
+        if (flag == 1) {
+            return new com.zs.util.ResponseEntity<>(1000, "Success", "修改商品信息成功");
+        } else {
+            return new com.zs.util.ResponseEntity<>(1002, "Error", "修改商品信息失败");
+        }
+    }
 
     /**
      * 删除数据

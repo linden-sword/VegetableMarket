@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * (Sales)表服务实现类
@@ -30,6 +31,11 @@ public class SalesServiceImpl implements SalesService {
     @Override
     public Sales queryById(Integer sId) {
         return this.salesDao.queryById(sId);
+    }
+
+    @Override
+    public List<Sales> queryAllSales() {
+        return salesDao.queryAllSales();
     }
 
     /**

@@ -11,6 +11,7 @@ import com.zs.entity.Goods;
 public interface GoodsService {
     /**
      * 查询所有__分页
+     *
      * @return
      */
     com.github.pagehelper.PageInfo queAllGoods(int pageNum);
@@ -29,7 +30,7 @@ public interface GoodsService {
      * @param cId 主键
      * @return 实例对象
      */
-    com.github.pagehelper.PageInfo queryByCId(Integer cId,int pageNum);
+    com.github.pagehelper.PageInfo queryByCId(Integer cId, int pageNum);
 
     /**
      * 通过商品分类查询多条数据__已下架
@@ -37,7 +38,7 @@ public interface GoodsService {
      * @param cId 主键
      * @return 实例对象
      */
-    com.github.pagehelper.PageInfo queryByCIdPass(Integer cId,int pageNum);
+    com.github.pagehelper.PageInfo queryByCIdPass(Integer cId, int pageNum);
 
     /**
      * 通过商品名称、描述 模糊查询
@@ -45,7 +46,20 @@ public interface GoodsService {
      * @param goods
      * @return 实例对象
      */
-    com.github.pagehelper.PageInfo queryByGNameLike(Goods goods,int pageNum);
+    com.github.pagehelper.PageInfo queryByGNameLike(Goods goods, int pageNum);
+
+
+    /**
+     * 查询所有上架商品
+     */
+    com.github.pagehelper.PageInfo queryAllPut(int pageNum);
+
+    com.github.pagehelper.PageInfo queryAllPut2(int pageNum);
+
+    /**
+     * 查询所有上架商品（时间升序）
+     */
+    com.github.pagehelper.PageInfo queryAllPutASC(int pageNum);
 
 
     /**
@@ -62,7 +76,7 @@ public interface GoodsService {
      * @param goods 实例对象
      * @return 实例对象
      */
-    Goods update(Goods goods);
+    int update(Goods goods);
 
     /**
      * 通过主键删除数据

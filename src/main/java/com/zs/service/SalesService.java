@@ -4,6 +4,8 @@ import com.zs.entity.Sales;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
+import java.util.List;
+
 /**
  * (Sales)表服务接口
  *
@@ -19,6 +21,14 @@ public interface SalesService {
      * @return 实例对象
      */
     Sales queryById(Integer sId);
+
+
+    /**
+     * 查询所有
+     *
+     * @return
+     */
+    List<Sales> queryAllSales();
 
     /**
      * 新增数据

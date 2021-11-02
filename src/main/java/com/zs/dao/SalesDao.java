@@ -23,6 +23,21 @@ public interface SalesDao {
     Sales queryById(Integer sId);
 
     /**
+     * 通过cID查询单条数据
+     *
+     * @param cId 主键
+     * @return 实例对象
+     */
+    Sales queryByCId(Integer cId);
+
+    /**
+     * 查询所有
+     *
+     * @return
+     */
+    List<Sales> queryAllSales();
+
+    /**
      * 新增数据
      *
      * @param sales 实例对象

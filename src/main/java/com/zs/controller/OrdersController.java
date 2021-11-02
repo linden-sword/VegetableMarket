@@ -91,7 +91,7 @@ public class OrdersController {
 
         orders.setUId(token.getUId());
         orders.setOTime(new Date());
-        orders.setOStatus("待支付");
+        orders.setOStatus("待发货");
         //通过gId查商品
         Goods goods = goodsService.queryById(Integer.parseInt(gId));
         orders.setOTotalPrice(goods.getGPrice()*Integer.parseInt(odWeight));
@@ -120,7 +120,7 @@ public class OrdersController {
         Token token = tokenService.queryByUUId(tokenString);
         orders.setUId(token.getUId());
         orders.setOTime(new Date());
-        orders.setOStatus("待支付");
+        orders.setOStatus("待发货");
         orders.setOFreightPrice(10);
         orders.setOIdend(1);
         orders.setOPayStatus(0);

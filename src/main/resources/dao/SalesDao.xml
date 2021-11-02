@@ -31,6 +31,37 @@
         where s_id = #{sId}
     </select>
 
+    <!--查询单个by Cid-->
+    <select id="queryByCId" resultMap="SalesMap">
+        select s_id,
+               s_date_time,
+               c_id,
+               s_order_total,
+               s_total,
+               s_total_weight,
+               s_freight_price,
+               es_1,
+               es_2,
+               es_3
+        from sales
+        where c_id = #{cId}
+    </select>
+
+    <!--查询所有-->
+    <select id="queryAllSales" resultMap="SalesMap">
+        select s_id,
+               s_date_time,
+               c_id,
+               s_order_total,
+               s_total,
+               s_total_weight,
+               s_freight_price,
+               es_1,
+               es_2,
+               es_3
+        from sales
+    </select>
+
     <!--新增所有列-->
     <insert id="insert" keyProperty="sId" useGeneratedKeys="true">
         insert into sales(s_date_time, c_id, s_order_total, s_total, s_total_weight, s_freight_price, es_1, es_2, es_3)

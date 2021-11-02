@@ -20,9 +20,9 @@ public class Sales implements Serializable {
 
     private Integer sOrderTotal;
 
-    private Object sTotal;
+    private double sTotal;
 
-    private Object sTotalWeight;
+    private double sTotalWeight;
 
     private Object sFreightPrice;
 
@@ -65,19 +65,19 @@ public class Sales implements Serializable {
         this.sOrderTotal = sOrderTotal;
     }
 
-    public Object getSTotal() {
+    public double getSTotal() {
         return sTotal;
     }
 
-    public void setSTotal(Object sTotal) {
+    public void setSTotal(double sTotal) {
         this.sTotal = sTotal;
     }
 
-    public Object getSTotalWeight() {
+    public double getSTotalWeight() {
         return sTotalWeight;
     }
 
-    public void setSTotalWeight(Object sTotalWeight) {
+    public void setSTotalWeight(double sTotalWeight) {
         this.sTotalWeight = sTotalWeight;
     }
 

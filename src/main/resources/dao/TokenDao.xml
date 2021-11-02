@@ -109,5 +109,10 @@
         where to_id = #{toId}
     </delete>
 
+    <!--删除所有-->
+    <delete id="deleteAll">
+        delete
+        from token
+    </delete>
 </mapper>
 

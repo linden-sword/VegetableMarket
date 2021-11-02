@@ -40,6 +40,52 @@
         from goods
     </select>
 
+
+    <!--    时间降序排列查询所有-->
+    <select id="queryFreshTaste" resultMap="GoodsMap">
+        select g_id,
+               c_id,
+               g_name,
+               g_price,
+               g_isdiscount,
+               g_describe,
+               g_sales_volume,
+               g_buy_person_time,
+               g_stock,
+               g_storage_time,
+               g_removal_time,
+               g_status,
+               es_1,
+               es_2,
+               es_3
+        from goods
+        where g_status = 1
+        order by g_storage_time DESC
+    </select>
+
+    <!--    时间升序序排列查询所有-->
+    <select id="queryPromotionSale" resultMap="GoodsMap">
+        select g_id,
+               c_id,
+               g_name,
+               g_price,
+               g_isdiscount,
+               g_describe,
+               g_sales_volume,
+               g_buy_person_time,
+               g_stock,
+               g_storage_time,
+               g_removal_time,
+               g_status,
+               es_1,
+               es_2,
+               es_3
+        from goods
+        where g_status = 1
+        order by g_storage_time
+    </select>
+
+
     <!--查询单个-->
     <select id="queryById" resultMap="GoodsMap">
         select g_id,
@@ -80,6 +126,7 @@
                es_3
         from goods
         where c_id = #{cId}
+          and g_status = 1
     </select>
 
     <!--查询by cId and Passed-->
@@ -135,7 +182,8 @@
 
     <!--新增所有列-->
     <insert id="insert">
-        insert into goods values (null ,#{cId}, #{gName}, #{gPrice}, #{gIsdiscount}, #{gDescribe}, #{gSalesVolume}, #{gBuyPersonTime},
+        insert into goods
+        values (null, #{cId}, #{gName}, #{gPrice}, #{gIsdiscount}, #{gDescribe}, #{gSalesVolume}, #{gBuyPersonTime},
                 #{gStock}, #{gStorageTime}, #{gRemovalTime}, #{gStatus}, #{es1}, #{es2}, #{es3})
     </insert>
 

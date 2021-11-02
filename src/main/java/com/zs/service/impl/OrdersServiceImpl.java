@@ -2,19 +2,15 @@ package com.zs.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.zs.dao.OrdersDao;
-import com.zs.entity.Goods;
-import com.zs.entity.Orders;
+import com.zs.dao.*;
+import com.zs.entity.*;
 import com.zs.service.OrdersService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
-import com.zs.dao.GoodsDao;
-import com.zs.dao.OrderdetailsDao;
-import com.zs.dao.ShoppingcartDao;
-import com.zs.entity.Orderdetails;
-import com.zs.entity.Shoppingcart;
+
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
@@ -35,6 +31,8 @@ public class OrdersServiceImpl implements OrdersService {
     private GoodsDao goodsDao;
     @Resource
     private ShoppingcartDao shoppingcartDao;
+    @Resource
+    private SalesDao salesDao;
 
     /**
      * 通过ID查询单条数据
@@ -72,6 +70,13 @@ public class OrdersServiceImpl implements OrdersService {
         Goods goods = goodsDao.queryById(Integer.parseInt(gId));
         goods.setGStock(goods.getGStock()-Integer.parseInt(odWeight));
         goodsDao.update(goods);
+        //加入统计报表数据
+        Sales sales = salesDao.queryByCId(goodsDao.queryById(Integer.parseInt(gId)).getCId());
+        sales.setSDateTime(new Date());
+        sales.setSOrderTotal(sales.getSOrderTotal()+1);
+        sales.setSTotalWeight(Double.parseDouble(odWeight));
+        sales.setSTotal(sales.getSTotal()+goodsDao.queryById(Integer.parseInt(gId)).getGPrice()*Integer.parseInt(odWeight));
+        salesDao.update(sales);
         return 1;
     }
 
@@ -119,6 +124,13 @@ public class OrdersServiceImpl implements OrdersService {
             Goods goods = goodsDao.queryById(shoppingcart.getGId());
             goods.setGStock(goods.getGStock()-shoppingcart.getScWeight());
             goodsDao.update(goods);
+            //加入统计报表数据
+            Sales sales = salesDao.queryByCId(goodsDao.queryById(goods.getGId()).getCId());
+            sales.setSDateTime(new Date());
+            sales.setSOrderTotal(sales.getSOrderTotal()+1);
+            sales.setSTotalWeight(sales.getSTotalWeight()+shoppingcart.getScWeight());
+            sales.setSTotal(sales.getSTotal()+goodsDao.queryById(shoppingcart.getGId()).getGPrice()*shoppingcart.getScWeight());
+            salesDao.update(sales);
             //计算totalPrice
             totalPrice = totalPrice + goodsDao.queryById(shoppingcart.getGId()).getGPrice()*shoppingcart.getScWeight();
         }

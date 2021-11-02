@@ -41,10 +41,9 @@ public class UsersController {
     @GetMapping("/VegetableMarket/User")
 //    @CrossOrigin(origins="http://127.0.0.1:5502",allowCredentials="true")
     public com.zs.util.ResponseEntity<Token> login(String username, String passwd, HttpServletRequest request, HttpServletResponse response) {
-
         System.out.println("====== 登录信息 ：" + username + " ," + passwd + " ======");
 
-
+//        int flag = usersService.login(username, MD5Util.toMd5(passwd));
         int flag = usersService.login(username, passwd);
         Users users = usersService.queryByUsername(username);
         if (flag == 1) {
@@ -58,7 +57,19 @@ public class UsersController {
             //修改数据库中token
             tokenService.update(token);
 
+            //判断是否封禁
+            if (users.getUStatus().equals("0")) {
+                return new com.zs.util.ResponseEntity<>(1002, "您的账户已被冻结", null);
+            }
 
+            //判断是否是管理员
+            if (users.getURole().equals("1")) {
+                return new com.zs.util.ResponseEntity<>(1000, "1", token);
+//            }else if (users.getURole().equals("2")){
+//                return new com.zs.util.ResponseEntity<>(1000, "2", token);
+            } else if (users.getURole().equals("0")) {
+                return new com.zs.util.ResponseEntity<>(1000, "0", token);
+            }
             return new com.zs.util.ResponseEntity<>(1000, "Success:登陆成功", token);
         }
         if (flag == 2) {
@@ -72,18 +83,33 @@ public class UsersController {
     }
 
     /**
+     * 退出登录
+     */
+    @GetMapping("/VegetableMarket/User/logOut")
+    public com.zs.util.ResponseEntity<String> logOut(HttpServletRequest request, HttpServletResponse response) {
+
+        String tokenString = (String) request.getAttribute("token");
+        Token token = tokenService.queryByUUId(tokenString);
+
+        tokenService.deleteById(token.getToId());
+
+        return new com.zs.util.ResponseEntity<>(1004, "Success", "退出登录成功");
+    }
+
+    /**
      * 注册
      */
     @PostMapping("/VegetableMarket/reg")
 //    @CrossOrigin(origins="http://127.0.0.1:5501",allowCredentials="true")
-    public com.zs.util.ResponseEntity<String> reg(Users users, HttpServletRequest request, HttpServletResponse response){
+    public com.zs.util.ResponseEntity<String> reg(Users users, HttpServletRequest request, HttpServletResponse response) {
         System.out.println("====== 注册信息 ：" + users.getUsername() + " ," + users.getPasswd() + " , " + users.getUEmail() + " ======");
         users.setUDatetime(new Date());
         users.setURole("1");
         users.setUStatus("1");
+//        users.setPasswd(MD5Util.toMd5(users.getPasswd()));
         int flag = usersService.reg(users);
 
-        if (flag==1){
+        if (flag == 1) {
             return new com.zs.util.ResponseEntity<>(1000, "Success", "注册成功");
         }
         return new com.zs.util.ResponseEntity<>(1002, "Error", "注册失败");
@@ -168,7 +194,7 @@ public class UsersController {
         if (insert == null) {
             return new com.zs.util.ResponseEntity<>(1002, "Error：添加失败", null);
         }
-            return new com.zs.util.ResponseEntity<>(1000, "Success：添加成功", insert);
+        return new com.zs.util.ResponseEntity<>(1000, "Success：添加成功", insert);
     }
 
     /**
@@ -208,6 +234,16 @@ public class UsersController {
         uu.setUsername(users.getUsername());
         uu.setPasswd(users.getPasswd());
         Users update = usersService.update(uu);
+        if (update != null) {
+            return new com.zs.util.ResponseEntity<>(1000, "Success：修改用户成功", update);
+        } else {
+            return new com.zs.util.ResponseEntity<>(1002, "Error：修改用户失败", update);
+        }
+    }
+
+    @PostMapping("/VegetableMarket/UserUpPsw")
+    public com.zs.util.ResponseEntity<Users> editpsw2(Users users) {
+        Users update = usersService.update(users);
         if (update != null) {
             return new com.zs.util.ResponseEntity<>(1000, "Success：修改用户成功", update);
         } else {

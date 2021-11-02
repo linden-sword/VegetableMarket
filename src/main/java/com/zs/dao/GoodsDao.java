@@ -45,6 +45,18 @@ public interface GoodsDao {
      */
     List<Goods> queryByCIdPass(Integer cId);
 
+
+    /**
+     * 按时间降序排列查找最新的商品
+     */
+    List<Goods> queryFreshTaste();
+
+    /**
+     * 按时间升序排列查找最新的商品
+     */
+    List<Goods> queryPromotionSale();
+
+
     /**
      * 通过商品名称、描述 模糊查询
      *
